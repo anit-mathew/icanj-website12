@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | ICANJ Church</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --blue: #00ADEF; --blue-deep: #0089C4; --blue-dark: #005F8A;
+            --navy: #0A1628; --navy-mid: #0D1E35; --navy-card: #112240;
+            --slate: #1A2E4A; --silver: #E8F4FB; --white: #FFFFFF;
+            --mist: #F0F7FC; --ink: #081020;
+            --text-dim: rgba(255,255,255,0.55); --text-mid: rgba(255,255,255,0.75);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+        /* NAV */
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,16,32,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(0,173,239,0.15); }
+        .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; height: 74px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+        .logo-mark { width: 120px; height: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 0.18em; color: var(--blue); text-transform: uppercase; display: block; margin-top: -4px; }
+        .logo-text, .logo-sub { display: none; }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--blue); }
+        .btn-give { background: var(--blue) !important; color: white !important; font-weight: 700 !important; padding: 9px 26px; border-radius: 8px; letter-spacing: 0.06em; box-shadow: 0 4px 16px rgba(0,173,239,0.3); }
+
+        /* PAGE MASTHEAD */
+        .masthead {
+            padding-top: 74px;
+            background: linear-gradient(135deg, #081020 0%, #0A1628 50%, #0D1E35 100%);
+            position: relative; overflow: hidden;
+        }
+        .masthead::before {
+            content: ''; position: absolute; top: -200px; right: -100px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,173,239,0.1) 0%, transparent 65%);
+        }
+        .masthead::after {
+            content: 'ABOUT'; position: absolute; font-family: 'Bebas Neue', sans-serif;
+            font-size: 22vw; color: rgba(0,173,239,0.03);
+            bottom: -2vw; left: -1vw; letter-spacing: -4px; pointer-events: none; line-height: 1;
+        }
+        .masthead-inner { max-width: 1280px; margin: 0 auto; padding: 3rem 2.5rem 2.5rem; position: relative; z-index: 1; }
+        .section-tag { display: inline-block; background: var(--blue); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 5px 16px; border-radius: 4px; margin-bottom: 1.25rem; }
+        .masthead h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 2px; }
+        .masthead h1 span { color: var(--blue); }
+        .masthead-sub { font-family: 'Lora', serif; font-style: italic; font-size: 1.15rem; color: var(--text-mid); margin-top: 1rem; max-width: 560px; line-height: 1.7; }
+
+        /* MISSION STRIP */
+        .mission-strip {
+            background: var(--blue);
+            padding: 2.5rem;
+            text-align: center;
+        }
+        .mission-strip blockquote {
+            font-family: 'Lora', serif; font-style: italic;
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            color: white; max-width: 900px; margin: 0 auto;
+            line-height: 1.65;
+        }
+        .mission-strip cite { display: block; margin-top: 0.75rem; font-size: 0.75rem; font-family: 'DM Sans', sans-serif; font-style: normal; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.8; }
+
+        /* STORY SECTION */
+        .story { background: var(--mist); color: var(--navy); padding: 6rem 2.5rem; }
+        .story-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
+        .story h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 1px; margin-bottom: 1.5rem; }
+        .story h2 span { color: var(--blue-deep); }
+        .story p { font-size: 1.02rem; line-height: 1.8; color: #3A5068; }
+        .story p + p { margin-top: 1rem; }
+        .story-img { border-radius: 20px; overflow: hidden; position: relative; }
+        .story-img img { width: 100%; display: block; border-radius: 20px; box-shadow: 0 24px 64px rgba(0,100,160,0.18); }
+        .story-img::before {
+            content: ''; position: absolute;
+            bottom: -3px; left: 0; right: 0; height: 50%;
+            background: linear-gradient(to top, rgba(0,100,160,0.25), transparent);
+            border-radius: 0 0 20px 20px; z-index: 1;
+        }
+        .year-badge {
+            position: absolute; top: 16px; left: 16px; z-index: 2;
+            background: var(--blue); color: white;
+            font-family: 'Bebas Neue', sans-serif; font-size: 2rem; line-height: 1;
+            padding: 8px 14px; border-radius: 10px;
+            box-shadow: 0 6px 18px rgba(0,173,239,0.45);
+        }
+        .year-badge small { display: block; font-family: 'DM Sans', sans-serif; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.85; }
+
+        /* VALUES */
+        .values { background: var(--navy); padding: 6rem 2.5rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 2px; margin-top: 0.75rem; }
+        .section-header p { color: var(--text-dim); margin-top: 0.6rem; font-size: 1rem; }
+        .values-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 1.5rem; }
+        .value-card {
+            background: linear-gradient(145deg, #0E2040 0%, #0A1628 100%);
+            border: 1px solid rgba(0,173,239,0.15);
+            border-radius: 20px; padding: 2.5rem 2rem;
+            position: relative; overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .value-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue-dark), var(--blue)); border-radius: 20px 20px 0 0; }
+        .value-card:hover { transform: translateY(-6px); border-color: rgba(0,173,239,0.35); }
+        .value-num { display: none; }
+        .value-card h4 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.6rem; color: white; }
+        .value-card p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+
+        /* LEADERSHIP */
+        .leadership { background: var(--mist); color: var(--navy); padding: 6rem 2.5rem; }
+        .leadership .section-header h2 { color: var(--navy); }
+        .leadership .section-header p { color: #5A7A96; }
+        .leaders-grid { max-width: 860px; margin: 0 auto; display: grid; grid-template-columns: repeat(2, 1fr); gap: 2rem; }
+        .leader-card {
+            background: white; border-radius: 20px; overflow: hidden;
+            box-shadow: 0 8px 32px rgba(0,80,140,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .leader-card:hover { transform: translateY(-6px); box-shadow: 0 20px 48px rgba(0,80,140,0.18); }
+        .leader-img { height: 260px; overflow: hidden; position: relative; }
+        .leader-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+        .leader-card:hover .leader-img img { transform: scale(1.04); }
+        .leader-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 4rem; color: rgba(255,255,255,0.6); }
+        .lp1 { background: linear-gradient(135deg, #0089C4, #005F8A); }
+        .lp2 { background: linear-gradient(135deg, #00ADEF, #0089C4); }
+        .lp3 { background: linear-gradient(135deg, #1A4A7A, #0A2A50); }
+        .leader-body { padding: 1.75rem; }
+        .leader-role { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue-deep); margin-bottom: 0.35rem; }
+        .leader-name { font-family: 'Lora', serif; font-size: 1.3rem; font-weight: 600; color: var(--navy); margin-bottom: 0.6rem; }
+        .leader-bio { font-size: 0.85rem; color: #5A7A96; line-height: 1.65; }
+
+        /* BELIEFS */
+        .beliefs { background: var(--navy-mid); padding: 6rem 2.5rem; }
+        .beliefs-inner { max-width: 900px; margin: 0 auto; }
+        .belief-item {
+            padding: 1.75rem 0;
+            border-bottom: 1px solid rgba(0,173,239,0.1);
+            display: grid; grid-template-columns: 60px 1fr; gap: 1.25rem; align-items: start;
+        }
+        .belief-item:last-child { border-bottom: none; }
+        .belief-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--blue); opacity: 0.5; line-height: 1; }
+        .belief-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.35rem; color: white; }
+        .belief-item p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; }
+        .beliefs-collapsible {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.55s cubic-bezier(0.4,0,0.2,1);
+        }
+        .beliefs-collapsible.open { max-height: 2400px; }
+        .beliefs-toggle {
+            display: flex; align-items: center; justify-content: center; gap: 0.75rem;
+            margin-top: 2rem; padding: 1rem 2rem;
+            background: none; border: 1px solid rgba(0,173,239,0.3);
+            border-radius: 10px; color: var(--blue);
+            font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 700;
+            letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+            width: 100%; transition: border-color 0.2s, background 0.2s;
+        }
+        .beliefs-toggle:hover { border-color: var(--blue); background: rgba(0,173,239,0.06); }
+        .beliefs-toggle .toggle-icon { transition: transform 0.35s; display: inline-block; }
+        .beliefs-toggle.open .toggle-icon { transform: rotate(180deg); }
+
+        /* FOOTER */
+        footer { background: var(--ink); border-top: 1px solid rgba(0,173,239,0.1); padding: 3.5rem 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--blue); }
+        footer p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+        footer .copy { margin-top: 2rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+
+        /* ── HAMBURGER ── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 900px) {
+            .nav-toggle { display: flex; }
+            .nav-links { display: none; }
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 74px; left: 0; right: 0;
+                background: rgba(8,16,32,0.97);
+                backdrop-filter: blur(18px);
+                padding: 1.5rem 2rem 2rem;
+                gap: 1.25rem;
+                border-top: 1px solid rgba(0,173,239,0.15);
+                z-index: 99;
+            }
+            .nav-links.mobile-open a { font-size: 1rem; padding: 4px 0; }
+            .nav-links.mobile-open .btn-give { margin-top: 0.5rem; }
+            .story-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+            .values-grid { grid-template-columns: repeat(2,1fr); }
+            .leaders-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 600px) {
+            .leaders-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="logo" href="index.html">
+            <div class="logo-mark"><img src="pics/LOGO transparent3_white.png" alt="ICANJ"></div>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="visit.html">Visit</a></li>
+            <li><a href="media.html">Media</a></li>
+            <li><a href="ministries.html">Ministries</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="https://icanj.churchcenter.com/giving" target="_blank" class="btn-give">Give</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+    <div class="masthead-inner">
+        <span class="section-tag">Our Story</span>
+        <h1>Who We<br><span>Are</span></h1>
+    </div>
+</div>
+
+
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+    <blockquote>
+        Passionate for God. Compassionate for humanity. Committed to perfecting the saints and transforming lives through faithful Biblical teaching, soul-saving witness, and Spirit-filled worship.
+        <cite>Our Mission — ICANJ</cite>
+    </blockquote>
+</div>
+
+<!-- VISION STRIP -->
+<div style="background:var(--navy-mid);padding:3rem 2.5rem;text-align:center;border-top:1px solid rgba(0,173,239,0.1)">
+    <div style="max-width:860px;margin:0 auto">
+        <span class="section-tag">Our Vision</span>
+        <p style="font-family:'Lora',serif;font-style:italic;font-size:clamp(1rem,2vw,1.35rem);color:var(--text-mid);line-height:1.75;margin-top:1rem">A Christ-centered body of believers of every generation, with a passion for God and compassion for humanity, existing for the perfecting of saints and the transformation of all — through faithful Biblical teaching, soul-saving witnessing, and Spirit-filled worship.</p>
+        <p style="margin-top:1.25rem;font-size:0.82rem;color:var(--text-dim);letter-spacing:0.06em">As we approach 2033 — marking 2,000 years of the birth of the Church — we are striving to bring every generation to maturity in Christ, reaching further into every nation, from New Jersey and beyond.</p>
+    </div>
+</div>
+<section class="story">
+    <div class="story-inner">
+        <div>
+            <span class="section-tag">Our History</span>
+            <h2>Rooted in <span>Faith Since 1987</span></h2>
+            <p>India Christian Assembly of New Jersey began in 1987 in Bergenfield, New Jersey — born out of a small gathering of believers with a passion for God and a burden to reach the unreached with the Gospel of Jesus Christ.</p>
+            <p>From those humble beginnings, the Lord has been faithful. What started as a handful of families praying together has grown into a vibrant, Spirit-filled congregation. Today the church is rooted in Hackensack, New Jersey, at 315 State Street — a full-gospel church grounded in the teachings of the Lord Jesus Christ and His apostles.</p>
+            <p>Across the years, ICANJ has remained committed to faithful biblical teaching, soul-winning witness, and Spirit-filled worship — caring for its members, serving its community, and supporting the work of missions both locally and abroad. We give all glory to God for what He has done, and we look forward in faith to all He will continue to do through this church for generations to come.</p>
+        </div>
+        <div class="story-img">
+            <img src="pics/DSC03641.JPG" alt="ICANJ congregation worship">
+            <div class="year-badge">1987<small>Est.</small></div>
+        </div>
+    </div>
+</section>
+
+<!-- VALUES -->
+<section class="values">
+    <div class="section-header">
+        <span class="section-tag">What Drives Us</span>
+        <h2>Our Core Values</h2>
+        <p>The pillars that shape everything we do as a church family.</p>
+    </div>
+    <div class="values-grid">
+        <div class="value-card">
+            <h4><i class="fas fa-hands-praying" style="color:var(--blue);margin-right:0.5rem"></i>Spirit-Filled Worship</h4>
+            <p>Worship that is Spirit-filled and Christ-exalting — the heartbeat of every gathering at ICANJ.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-book-open" style="color:var(--blue);margin-right:0.5rem"></i>The Word of God</h4>
+            <p>The Bible is our foundation — we preach it boldly, teach it faithfully, and live it practically in every season.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-cross" style="color:var(--blue);margin-right:0.5rem"></i>Prayer & Dependence</h4>
+            <p>We are a people of prayer, wholly dependent on the Holy Spirit for direction, power, and fruit.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-seedling" style="color:var(--blue);margin-right:0.5rem"></i>Discipleship & Growth</h4>
+            <p>We are committed to the lifelong journey of becoming more like Jesus, in community and through His Word.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-globe" style="color:var(--blue);margin-right:0.5rem"></i>Evangelism & Missions</h4>
+            <p>Compelled by the Great Commission — locally in Hackensack, across New Jersey, and to the ends of the earth.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-heart" style="color:var(--blue);margin-right:0.5rem"></i>Loving Fellowship</h4>
+            <p>We are a family — pursuing unity, encouraging one another, and doing life together with love and intentionality.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-hands-holding-heart" style="color:var(--blue);margin-right:0.5rem"></i>Compassion & Service</h4>
+            <p>We exist to serve — our congregation, our community, and the world — with the love and mercy of Christ.</p>
+        </div>
+        <div class="value-card">
+            <h4><i class="fas fa-star" style="color:var(--blue);margin-right:0.5rem"></i>Excellence & Integrity</h4>
+            <p>Everything we do, we do for the glory of God — with a spirit of excellence, honesty, and integrity.</p>
+        </div>
+    </div>
+</section>
+
+<!-- LEADERSHIP -->
+<section class="leadership">
+    <div class="section-header">
+        <span class="section-tag">Meet the Team</span>
+        <h2 style="color:var(--navy)">Our Leadership</h2>
+    </div>
+    <div class="leaders-grid">
+        <div class="leader-card">
+            <div class="leader-img lp1">
+                <img src="pics/DSC05331.JPG" alt="Pr. Finney Thomas">
+            </div>
+            <div class="leader-body">
+                <div class="leader-role">Senior Pastor</div>
+                <div class="leader-name">Pr. Finney Thomas</div>
+                <p class="leader-bio">Pastor Finney has led ICANJ with vision, humility, and Spirit-led authority for over two decades. His heart beats for every person to encounter the transforming love of Jesus.</p>
+            </div>
+        </div>
+        <div class="leader-card">
+            <div class="leader-img lp2">
+                <img src="pics/1CA01983.jpg" alt="Pr. Tony Koshy">
+            </div>
+            <div class="leader-body">
+                <div class="leader-role">Youth Pastor</div>
+                <div class="leader-name">Pr. Tony Koshy</div>
+                <p class="leader-bio">Pastor Tony leads ICANJ's youth ministry with passion and purpose — creating a space where the next generation can grow in faith, find community, and step boldly into their calling.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- BELIEFS -->
+<section class="beliefs">
+    <div class="beliefs-inner">
+        <div class="section-header">
+            <span class="section-tag">Theology</span>
+            <h2>What We Believe</h2>
+            <p>Our faith rooted in Scripture and the historic Christian tradition.</p>
+        </div>
+        <div>
+            <div class="belief-item">
+                <div class="belief-num">01</div>
+                <div>
+                    <h4>The Holy Scriptures</h4>
+                    <p>The Bible is God's inspired, infallible Word and our final authority for faith and life. <em style="color:var(--blue);font-style:normal;font-size:0.75rem">— Sola Scriptura</em></p>
+                </div>
+            </div>
+            <div class="belief-item">
+                <div class="belief-num">02</div>
+                <div>
+                    <h4>The Triune God</h4>
+                    <p>One God, eternally existing in three Persons: Father, Son, and Holy Spirit — co-equal and co-eternal.</p>
+                </div>
+            </div>
+            <div class="belief-item">
+                <div class="belief-num">03</div>
+                <div>
+                    <h4>Creation &amp; the Fall</h4>
+                    <p>God made humanity in His image; through Adam's sin all are fallen and in need of His grace.</p>
+                </div>
+            </div>
+            <div class="belief-item">
+                <div class="belief-num">04</div>
+                <div>
+                    <h4>Jesus Christ</h4>
+                    <p>Fully God and fully man — crucified for our sins, risen bodily, now reigning and interceding at the right hand of the Father. <em style="color:var(--blue);font-style:normal;font-size:0.75rem">— Solus Christus</em></p>
+                </div>
+            </div>
+
+            <!-- Collapsible: items 05–17 -->
+            <div class="beliefs-collapsible" id="beliefs-more">
+                <div class="belief-item">
+                    <div class="belief-num">05</div>
+                    <div>
+                        <h4>Salvation by Grace</h4>
+                        <p>Salvation is by grace alone, through faith alone, in Christ alone — producing a transformed life. <em style="color:var(--blue);font-style:normal;font-size:0.75rem">— Sola Gratia, Sola Fide</em></p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">06</div>
+                    <div>
+                        <h4>The Holy Spirit</h4>
+                        <p>The third Person of the Trinity, who convicts, regenerates, indwells, and sanctifies believers.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">07</div>
+                    <div>
+                        <h4>Baptism of the Holy Spirit</h4>
+                        <p>A distinct empowering for witness and service, given subsequent to salvation.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">08</div>
+                    <div>
+                        <h4>The Initial Evidence</h4>
+                        <p>Speaking in other tongues is the initial physical evidence of Spirit baptism.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">09</div>
+                    <div>
+                        <h4>Gifts of the Spirit</h4>
+                        <p>The Spirit distributes gifts to build up the Church and advance the Gospel in the world.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">10</div>
+                    <div>
+                        <h4>Signs Following Believers</h4>
+                        <p>The Lord confirms His Word with signs as the Gospel is proclaimed.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">11</div>
+                    <div>
+                        <h4>Authority &amp; Victory in Christ</h4>
+                        <p>Through the cross and resurrection, believers share in Christ's victory over sin and darkness.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">12</div>
+                    <div>
+                        <h4>Divine Healing</h4>
+                        <p>Healing is provided in Christ's redemptive work and is available to His people today.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">13</div>
+                    <div>
+                        <h4>The Church &amp; Mission</h4>
+                        <p>The Church worships God, proclaims the Gospel, and makes disciples of all nations.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">14</div>
+                    <div>
+                        <h4>The Ordinances</h4>
+                        <p>Water baptism by immersion and the Lord's Supper, as established by Christ.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">15</div>
+                    <div>
+                        <h4>Marriage</h4>
+                        <p>The exclusive, lifelong covenant union of one man and one woman, as God designed.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">16</div>
+                    <div>
+                        <h4>The Return of Christ</h4>
+                        <p>Christ will return visibly and bodily; the dead will be raised and all will stand before God.</p>
+                    </div>
+                </div>
+                <div class="belief-item">
+                    <div class="belief-num">17</div>
+                    <div>
+                        <h4>The Glory of God</h4>
+                        <p>All things exist for the glory of God, to whom be honor, majesty, and dominion forever. <em style="color:var(--blue);font-style:normal;font-size:0.75rem">— Soli Deo Gloria</em></p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="beliefs-toggle" id="beliefs-toggle" onclick="toggleBeliefs()">
+                <span id="beliefs-toggle-label">View All 17 Articles</span>
+                <span class="toggle-icon">&#8964;</span>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- CHURCH STRUCTURE -->
+<section style="background:var(--mist);color:var(--navy);padding:6rem 2.5rem">
+    <div style="max-width:1200px;margin:0 auto">
+        <div class="section-header">
+            <span class="section-tag">Leadership</span>
+            <h2 style="color:var(--navy)">Structure of the Church</h2>
+            <p style="color:#5A7A96">Led under the lordship of Jesus Christ, served by pastors, leaders, and ministry teams.</p>
+        </div>
+        <!-- Leadership row -->
+        <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;margin-bottom:3rem;max-width:900px;margin-left:auto;margin-right:auto">
+            <div style="background:var(--blue);color:white;border-radius:12px;padding:1rem 2rem;text-align:center;min-width:200px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;opacity:0.85;margin-bottom:0.25rem">Senior Pastor</div>
+                <div style="font-family:'Lora',serif;font-size:1.1rem;font-weight:600">Finney Thomas</div>
+            </div>
+            <div style="background:white;border:1px solid rgba(0,137,196,0.25);border-radius:12px;padding:1rem 2rem;text-align:center;min-width:180px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:0.25rem">Youth Pastor</div>
+                <div style="font-family:'Lora',serif;font-size:1rem;color:var(--navy)">Tony Koshy</div>
+            </div>
+            <div style="background:white;border:1px solid rgba(0,137,196,0.25);border-radius:12px;padding:1rem 2rem;text-align:center;min-width:180px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:0.25rem">Youth Director</div>
+                <div style="font-family:'Lora',serif;font-size:1rem;color:var(--navy)">Noble Mathew</div>
+            </div>
+            <div style="background:white;border:1px solid rgba(0,137,196,0.25);border-radius:12px;padding:1rem 2rem;text-align:center;min-width:180px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:0.25rem">Treasurer</div>
+                <div style="font-family:'Lora',serif;font-size:1rem;color:var(--navy)">Alex Chalunkal</div>
+            </div>
+            <div style="background:white;border:1px solid rgba(0,137,196,0.25);border-radius:12px;padding:1rem 2rem;text-align:center;min-width:180px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:0.25rem">Secretary</div>
+                <div style="font-family:'Lora',serif;font-size:1rem;color:var(--navy)">Felix Mathew</div>
+            </div>
+            <div style="background:white;border:1px solid rgba(0,137,196,0.25);border-radius:12px;padding:1rem 2rem;text-align:center;min-width:200px">
+                <div style="font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--blue-deep);margin-bottom:0.25rem">Sunday School Director</div>
+                <div style="font-family:'Lora',serif;font-size:1rem;color:var(--navy)">Jessy Chacko</div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- GROWTH PATHWAY -->
+<section style="background:var(--navy);padding:6rem 2.5rem">
+    <div style="max-width:1100px;margin:0 auto">
+        <div class="section-header">
+            <span class="section-tag">Spiritual Formation</span>
+            <h2>The Growth Pathway</h2>
+            <p>We are called not only to receive Christ, but to grow in Him — together.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem">
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">01</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Know Christ</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Receive salvation by grace through faith in Jesus, repenting of sin and trusting His finished work.</p>
+            </div>
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">02</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Be Baptized</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Follow the Lord in water baptism by immersion as a public confession of your faith.</p>
+            </div>
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">03</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Be Filled with the Spirit</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Earnestly seek the baptism of the Holy Spirit for power to witness and to serve.</p>
+            </div>
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">04</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Grow in the Word</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Take part in Bible study, Sunday School, and discipleship classes to be rooted in truth.</p>
+            </div>
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">05</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Connect in Community</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Join a small group or ministry where you are known, prayed for, and encouraged.</p>
+            </div>
+            <div style="background:linear-gradient(145deg,#0E2040,#0A1628);border:1px solid rgba(0,173,239,0.15);border-radius:20px;padding:2rem;position:relative;overflow:hidden">
+                <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue-dark),var(--blue))"></div>
+                <div style="font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--blue);opacity:0.3;line-height:1;margin-bottom:0.5rem">06</div>
+                <h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.4rem">Serve &amp; Multiply</h4>
+                <p style="font-size:0.85rem;color:var(--text-dim);line-height:1.7">Discover your spiritual gifts, serve the body, and help lead others to Christ.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- MEMBER EXPECTATIONS -->
+<section style="background:var(--navy-mid);padding:6rem 2.5rem">
+    <div style="max-width:900px;margin:0 auto">
+        <div class="section-header">
+            <span class="section-tag">Membership</span>
+            <h2>Member Expectations</h2>
+            <p>Membership is a joyful commitment to belong to the body of Christ at ICANJ.</p>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-church"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Worship Faithfully</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Attend weekly worship services and gather regularly with the church family.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-person-praying"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Pursue Holiness</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Walk in obedience to God's Word, growing in Christlike character and conduct.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-hand-holding-dollar"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Give Generously</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Honor God with your tithes and offerings to support His work and mission.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-hands-helping"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Serve Willingly</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Use your gifts to serve in a ministry and build up the body of Christ.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-heart"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Fellowship in Love</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Pursue unity, encourage one another, and care for fellow members.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-shield-halved"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Honor Leadership</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Pray for and submit to the spiritual leadership God has placed over the church.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0;border-bottom:1px solid rgba(0,173,239,0.1)">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-bullhorn"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Witness Boldly</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Share the Gospel and support the church's mission to reach the lost.</p></div>
+            </div>
+            <div style="display:grid;grid-template-columns:56px 1fr;gap:1.25rem;align-items:start;padding:1.75rem 0">
+                <div style="color:var(--blue);font-size:1.4rem;padding-top:2px"><i class="fas fa-book-bible"></i></div>
+                <div><h4 style="font-size:1rem;font-weight:700;color:white;margin-bottom:0.3rem">Uphold Our Faith</h4><p style="font-size:0.88rem;color:var(--text-dim);line-height:1.7">Affirm and live by the church's Statement of Faith and biblical standards, including God's design for marriage and family.</p></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEXT STEPS -->
+<section style="background:var(--mist);color:var(--navy);padding:6rem 2.5rem">
+    <div style="max-width:1100px;margin:0 auto">
+        <div class="section-header">
+            <span class="section-tag">Getting Started</span>
+            <h2 style="color:var(--navy)">Next Steps</h2>
+            <p style="color:#5A7A96">Ready to take your next step? Here's how to move toward membership at ICANJ.</p>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem;margin-bottom:3rem">
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Attend a Newcomers Class</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">Offered periodically — contact the church office for the next available class.</p></div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Complete a Membership Application</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">Available from the church office or at icanj.org.</p></div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Meet with a Pastor</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">Share your testimony and any questions you may have.</p></div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">4</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Be Baptized in Water</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">If you have not yet done so, take this public step of faith.</p></div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">5</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Join a Small Group or Ministry</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">Find your place to connect and serve in the body.</p></div>
+            </div>
+            <div style="background:white;border-radius:16px;padding:1.75rem;box-shadow:0 4px 20px rgba(0,80,140,0.09);display:flex;gap:1.25rem;align-items:flex-start">
+                <div style="background:var(--blue);color:white;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">6</div>
+                <div><h4 style="font-size:0.95rem;font-weight:700;color:var(--navy);margin-bottom:0.3rem">Begin Giving</h4><p style="font-size:0.83rem;color:#5A7A96;line-height:1.6">Give securely via the Church Center app — an act of worship and partnership in the mission.</p></div>
+            </div>
+        </div>
+        <div style="text-align:center">
+            <a href="visit.html" style="display:inline-flex;align-items:center;gap:8px;background:var(--blue);color:white;font-weight:700;font-size:0.9rem;padding:16px 36px;border-radius:10px;text-decoration:none;text-transform:uppercase;letter-spacing:0.1em;box-shadow:0 6px 20px rgba(0,173,239,0.35);transition:transform 0.2s">Plan Your Visit <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="ministries.html">Ministries</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="media.html">Media</a></li>
+    </ul>
+    <p>315 State Street · Hackensack, New Jersey</p>
+    <p class="copy">© 2026 India Christian Assembly of New Jersey</p>
+</footer>
+<script>
+// Hamburger menu
+(function() {
+    var toggle = document.querySelector('.nav-toggle');
+    var navLinks = document.querySelector('.nav-links');
+    if (!toggle || !navLinks) return;
+    toggle.addEventListener('click', function() {
+        var isOpen = navLinks.classList.toggle('mobile-open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(function(a) {
+        a.addEventListener('click', function() {
+            navLinks.classList.remove('mobile-open');
+            toggle.classList.remove('open');
+            toggle.setAttribute('aria-expanded', 'false');
+        });
+    });
+})();
+
+function toggleBeliefs() {
+    var el = document.getElementById('beliefs-more');
+    var btn = document.getElementById('beliefs-toggle');
+    var label = document.getElementById('beliefs-toggle-label');
+    var isOpen = el.classList.toggle('open');
+    btn.classList.toggle('open', isOpen);
+    label.textContent = isOpen ? 'Show Less' : 'View All 17 Articles';
+}
+</script>
+</body>
+</html>

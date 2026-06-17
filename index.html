@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ICANJ Church | Hackensack, NJ</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue:      #00ADEF;
+            --blue-deep: #0089C4;
+            --blue-dark: #005F8A;
+            --navy:      #0A1628;
+            --navy-mid:  #0D1E35;
+            --navy-card: #112240;
+            --slate:     #1A2E4A;
+            --silver:    #E8F4FB;
+            --white:     #FFFFFF;
+            --mist:      #F0F7FC;
+            --ink:       #081020;
+            --text-dim:  rgba(255,255,255,0.55);
+            --text-mid:  rgba(255,255,255,0.75);
+        }
+
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            overflow-x: hidden;
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0;
+            z-index: 100;
+            background: rgba(8,16,32,0.88);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid rgba(0,173,239,0.15);
+        }
+        .nav-inner {
+            max-width: 1280px; margin: 0 auto;
+            padding: 0 2.5rem; height: 74px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+        .logo-mark {
+            width: 120px; height: 44px;
+            display: flex; align-items: center; justify-content: center;
+            overflow: hidden;
+        }
+        .logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text {
+            font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px;
+            color: white;
+        }
+        .logo-sub {
+            font-size: 0.6rem; letter-spacing: 0.18em; color: var(--blue);
+            text-transform: uppercase; display: block; margin-top: -4px;
+        }
+        .logo-text, .logo-sub { display: none; }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a {
+            text-decoration: none; color: var(--text-mid);
+            font-size: 0.8rem; font-weight: 500;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--blue); }
+        .btn-give {
+            background: var(--blue) !important;
+            color: white !important; font-weight: 700 !important;
+            padding: 9px 26px; border-radius: 8px;
+            letter-spacing: 0.06em;
+            box-shadow: 0 4px 16px rgba(0,173,239,0.3);
+            transition: transform 0.2s, box-shadow 0.2s !important;
+        }
+        .btn-give:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,173,239,0.45) !important; }
+
+        /* ── HAMBURGER ── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative; height: 100vh; min-height: 680px;
+            display: flex; align-items: center; overflow: hidden;
+        }
+        .hero-video-wrap {
+            position: absolute; inset: 0; z-index: 0;
+            overflow: hidden; pointer-events: none;
+        }
+        .hero-video {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 177.78vh; /* 16:9 aspect at full height */
+            height: 56.25vw; /* 16:9 aspect at full width */
+            min-width: 100%; min-height: 100%;
+            border: none;
+        }
+        /* Minimal overlay — just enough for text legibility */
+        .hero-overlay {
+            position: absolute; inset: 0; z-index: 1;
+            background: linear-gradient(
+                to right,
+                rgba(8,16,32,0.65) 0%,
+                rgba(8,16,32,0.3) 50%,
+                rgba(8,16,32,0.05) 100%
+            );
+        }
+        /* Bottom fade to match body */
+        .hero-overlay::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to bottom, transparent 65%, var(--navy) 100%);
+        }
+        /* Subtle blue accent glow behind text */
+        .hero-glow {
+            position: absolute; z-index: 1;
+            left: -80px; top: 50%; transform: translateY(-50%);
+            width: 600px; height: 600px;
+            background: radial-gradient(circle, rgba(0,173,239,0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .hero-content {
+            position: relative; z-index: 2;
+            max-width: 1280px; width: 100%; margin: 0 auto;
+            padding: 0 2.5rem;
+            display: flex; flex-direction: column; align-items: flex-start;
+        }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,173,239,0.12);
+            border: 1px solid rgba(0,173,239,0.35);
+            border-radius: 6px;
+            padding: 7px 18px;
+            font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--blue); margin-bottom: 1.75rem;
+            animation: fadeUp 0.6s ease both;
+        }
+        .dot-pulse {
+            width: 7px; height: 7px; background: var(--blue);
+            border-radius: 50%; animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.7)} }
+        .hero h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(3.8rem, 8vw, 8rem);
+            line-height: 0.92; letter-spacing: 1px;
+            animation: fadeUp 0.7s 0.1s ease both;
+            max-width: 640px;
+        }
+        .hero h1 .line-blue {
+            color: var(--blue);
+            display: block;
+        }
+        .hero-sub {
+            font-family: 'Lora', serif; font-style: italic;
+            font-size: 1.2rem; color: var(--text-mid);
+            margin: 1.4rem 0 2.5rem; max-width: 420px;
+            animation: fadeUp 0.7s 0.2s ease both;
+            line-height: 1.6;
+        }
+        .hero-actions {
+            display: flex; gap: 1rem; flex-wrap: wrap;
+            animation: fadeUp 0.7s 0.3s ease both;
+        }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 10px;
+            background: var(--blue); color: white;
+            font-weight: 700; font-size: 0.9rem;
+            padding: 16px 36px; border-radius: 8px;
+            text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em;
+            box-shadow: 0 8px 24px rgba(0,173,239,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(0,173,239,0.5); }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 10px;
+            border: 1.5px solid rgba(255,255,255,0.4); color: white;
+            font-weight: 600; font-size: 0.9rem;
+            padding: 16px 36px; border-radius: 8px;
+            text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: white; }
+        @keyframes fadeUp {
+            from { opacity:0; transform:translateY(24px); }
+            to   { opacity:1; transform:translateY(0); }
+        }
+
+        /* ── PILLARS BAND ── */
+        .pillars {
+            display: grid; grid-template-columns: repeat(3,1fr);
+        }
+        .pillar {
+            padding: 2.75rem 2.5rem;
+            display: flex; align-items: center; gap: 18px;
+            position: relative; overflow: hidden;
+            border-right: 1px solid rgba(255,255,255,0.08);
+            transition: filter 0.3s;
+        }
+        .pillar:last-child { border-right: none; }
+        .pillar:nth-child(1) { background: linear-gradient(135deg, #003F6B 0%, #005F8A 100%); }
+        .pillar:nth-child(2) { background: linear-gradient(135deg, #005080 0%, #0089C4 100%); }
+        .pillar:nth-child(3) { background: linear-gradient(135deg, #0075AA 0%, #00ADEF 100%); }
+        .pillar::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse at 0% 50%, rgba(255,255,255,0.08) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .pillar:hover { filter: brightness(1.1); }
+        .pillar-icon {
+            width: 52px; height: 52px; flex-shrink: 0;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.25);
+            display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 1.3rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            position: relative; z-index: 1;
+        }
+        .pillar-text { position: relative; z-index: 1; }
+        .pillar-label { font-size: 0.85rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: white; }
+        .pillar-desc { font-size: 0.78rem; color: rgba(255,255,255,0.72); margin-top: 3px; line-height: 1.4; }
+
+        /* ── WELCOME ── */
+        .welcome {
+            background: var(--mist); color: var(--navy);
+            padding: 7rem 2.5rem; position: relative; overflow: hidden;
+        }
+        .welcome::before {
+            content: 'ICANJ';
+            position: absolute; font-family: 'Bebas Neue', sans-serif;
+            font-size: 26vw; color: rgba(0,173,239,0.04);
+            bottom: -4vw; right: -2vw;
+            pointer-events: none; line-height: 1; letter-spacing: -4px;
+        }
+        .welcome-inner {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 5rem; align-items: center; position: relative;
+        }
+        .section-tag {
+            display: inline-block;
+            background: var(--blue); color: white;
+            font-size: 0.65rem; font-weight: 700;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            padding: 5px 16px; border-radius: 4px; margin-bottom: 1.25rem;
+        }
+        .welcome h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.8rem, 5vw, 5rem);
+            line-height: 0.95; letter-spacing: 1px; margin-bottom: 1.5rem;
+            color: var(--navy);
+        }
+        .welcome h2 span { color: var(--blue-deep); }
+        .welcome p { font-size: 1.05rem; line-height: 1.8; color: #3A5068; }
+        .welcome-img-wrap { position: relative; }
+        .welcome-img-wrap img {
+            width: 100%; border-radius: 16px;
+            box-shadow: 0 24px 64px rgba(0,100,160,0.18); display: block;
+        }
+        .img-badge {
+            position: absolute; bottom: -20px; right: -20px;
+            width: 110px; height: 110px;
+            background: var(--blue); border-radius: 50%;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            box-shadow: 0 10px 32px rgba(0,173,239,0.4); color: white;
+        }
+        .img-badge .num { font-family: 'Bebas Neue',sans-serif; font-size: 2.2rem; line-height: 1; }
+        .img-badge .lbl { font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; text-align: center; opacity: 0.85; }
+
+        /* ── VISIT ── */
+        .visit {
+            background: var(--navy);
+            background-image:
+                radial-gradient(ellipse at 80% 0%, rgba(0,173,239,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 0% 100%, rgba(0,89,140,0.15) 0%, transparent 50%);
+            padding: 7rem 2.5rem; position: relative; overflow: hidden;
+        }
+        .visit::before {
+            content: ''; position: absolute; top: -300px; right: -200px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,173,239,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: clamp(2.6rem, 5vw, 4.5rem);
+            letter-spacing: 2px; margin-top: 0.75rem;
+        }
+        .section-header p { color: var(--text-dim); margin-top: 0.6rem; font-size: 1rem; }
+
+        .visit-grid {
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: 340px 1fr;
+            gap: 3.5rem; align-items: start; position: relative;
+        }
+        .service-card {
+            background: linear-gradient(160deg, #0D2A4A 0%, #0A1E38 60%, #081828 100%);
+            border: 1px solid rgba(0,173,239,0.3);
+            border-radius: 20px; padding: 2.5rem 2rem;
+            text-align: center; position: sticky; top: 96px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(0,173,239,0.15);
+        }
+        .live-pill {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(16,185,129,0.12); border: 1px solid rgba(16,185,129,0.3);
+            border-radius: 50px; padding: 5px 14px;
+            font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+            color: #34d399; margin-bottom: 1.75rem;
+        }
+        .service-time {
+            font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+            color: var(--blue); letter-spacing: 2px; line-height: 1;
+        }
+        .service-ampm { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--blue-deep); letter-spacing: 3px; }
+        .service-day { font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.4rem; }
+        .service-addr { margin-top: 1.25rem; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+        .service-divider { border: none; border-top: 1px solid rgba(0,173,239,0.15); margin: 1.75rem 0; }
+        .directions-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            color: var(--blue); font-weight: 600; font-size: 0.8rem;
+            text-decoration: none; transition: gap 0.2s;
+        }
+        .directions-btn:hover { gap: 12px; }
+
+        /* expect cards */
+        .expect-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .expect-card {
+            background: linear-gradient(145deg, #0E2040 0%, #0A1628 100%);
+            border-radius: 16px; padding: 2rem 1.75rem;
+            border: 1px solid rgba(0,173,239,0.15);
+            position: relative; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+        }
+        .expect-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 3px; border-radius: 16px 16px 0 0;
+            background: linear-gradient(90deg, var(--blue-deep), var(--blue));
+        }
+        /* Soft glow in corner */
+        .expect-card::after {
+            content: ''; position: absolute;
+            bottom: -30px; right: -30px;
+            width: 100px; height: 100px;
+            background: radial-gradient(circle, rgba(0,173,239,0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .expect-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.35);
+            border-color: rgba(0,173,239,0.35);
+        }
+        .expect-icon {
+            width: 46px; height: 46px; border-radius: 12px;
+            background: rgba(0,173,239,0.15); border: 1px solid rgba(0,173,239,0.3);
+            display: flex; align-items: center; justify-content: center;
+            color: var(--blue); font-size: 1.2rem; margin-bottom: 1.1rem;
+        }
+        .expect-card h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem; color: white; }
+        .expect-card p { font-size: 0.85rem; color: var(--text-dim); line-height: 1.65; }
+
+        /* RSVP */
+        .rsvp-wrap {
+            max-width: 1200px; margin: 5rem auto 0;
+            background: linear-gradient(135deg, #004A7A 0%, #0069A8 40%, #0089C4 70%, #005F8A 100%);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 24px; padding: 3.5rem;
+            position: relative; overflow: hidden;
+            box-shadow: 0 24px 64px rgba(0,80,160,0.35);
+        }
+        /* Radial highlight top-right */
+        .rsvp-wrap::before {
+            content: ''; position: absolute; top: -80px; right: -80px;
+            width: 400px; height: 400px;
+            background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        /* Diagonal shimmer stripe */
+        .rsvp-wrap::after {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.04) 50%, transparent 60%);
+            pointer-events: none;
+        }
+        .rsvp-wrap h3 {
+            font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem;
+            letter-spacing: 2px; text-align: center; margin-bottom: 0.4rem;
+            color: white; position: relative; z-index: 1;
+        }
+        .rsvp-wrap .sub { text-align: center; color: rgba(255,255,255,0.75); margin-bottom: 2.5rem; font-size: 0.9rem; position: relative; z-index: 1; }
+        .rsvp-form {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 0.875rem; max-width: 600px; margin: 0 auto; position: relative; z-index: 1;
+        }
+        .rsvp-form input {
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 10px; padding: 16px 20px;
+            color: white; font-size: 0.95rem; font-family: 'DM Sans', sans-serif;
+            outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+        }
+        .rsvp-form input::placeholder { color: rgba(255,255,255,0.5); }
+        .rsvp-form input:focus {
+            background: rgba(255,255,255,0.18);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.1);
+        }
+        .rsvp-form .full { grid-column: 1/-1; }
+        .btn-rsvp {
+            grid-column: 1/-1;
+            background: white; color: var(--blue-dark);
+            font-weight: 800; font-size: 1rem;
+            padding: 18px; border: none; border-radius: 10px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em;
+            font-family: 'DM Sans', sans-serif;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            transition: transform 0.2s, box-shadow 0.2s, background 0.2s; margin-top: 0.4rem;
+        }
+        .btn-rsvp:hover {
+            transform: translateY(-2px);
+            background: var(--silver);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.3);
+        }
+
+
+        /* ── SOCIAL FEED CAROUSEL ── */
+        .social-feed {
+            background: var(--navy-mid);
+            padding: 5rem 0 4rem;
+            border-top: 1px solid rgba(0,173,239,0.12);
+            overflow: hidden;
+        }
+        .social-feed-header {
+            text-align: center; margin-bottom: 3rem; padding: 0 2rem;
+        }
+        .social-feed-header h3 {
+            font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem;
+            letter-spacing: 3px; color: white; margin-top: 0.5rem;
+        }
+        .social-feed-header p { color: var(--text-dim); font-size: 0.9rem; margin-top: 0.4rem; }
+        .social-platform-tabs {
+            display: flex; justify-content: center; gap: 0.6rem;
+            margin-bottom: 2.5rem; flex-wrap: wrap; padding: 0 1rem;
+        }
+        .platform-tab {
+            display: inline-flex; align-items: center; gap: 7px;
+            padding: 8px 18px; border-radius: 50px; font-size: 0.78rem;
+            font-weight: 600; letter-spacing: 0.06em; cursor: pointer;
+            border: 1.5px solid transparent; transition: all 0.2s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .platform-tab.all { background: var(--blue); color: white; border-color: var(--blue); }
+        .platform-tab.fb  { background: rgba(26,92,160,0.15); color: #6AAAFF; border-color: rgba(26,92,160,0.3); }
+        .platform-tab.ig  { background: rgba(180,80,150,0.15); color: #F5A3D0; border-color: rgba(180,80,150,0.3); }
+        .platform-tab.yt  { background: rgba(204,0,0,0.15); color: #FF7070; border-color: rgba(204,0,0,0.3); }
+        .platform-tab:hover { filter: brightness(1.2); }
+
+        /* Infinite scroll track */
+        .social-track-wrap { position: relative; }
+        .social-track-wrap::before,
+        .social-track-wrap::after {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 80px; z-index: 2; pointer-events: none;
+        }
+        .social-track-wrap::before { left: 0; background: linear-gradient(to right, var(--navy-mid), transparent); }
+        .social-track-wrap::after  { right: 0; background: linear-gradient(to left, var(--navy-mid), transparent); }
+
+        .social-track {
+            display: flex; gap: 1.25rem;
+            width: max-content;
+            animation: socialScroll 32s linear infinite;
+            padding: 0.5rem 1rem 1.5rem;
+        }
+        .social-track:hover { animation-play-state: paused; }
+        @keyframes socialScroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        .social-card {
+            width: 280px; flex-shrink: 0;
+            background: linear-gradient(145deg, #0E2040, #0A1628);
+            border: 1px solid rgba(0,173,239,0.12);
+            border-radius: 18px; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            cursor: pointer;
+        }
+        .social-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.4);
+            border-color: rgba(0,173,239,0.3);
+        }
+        .social-card-img {
+            height: 200px; overflow: hidden; position: relative;
+            background: linear-gradient(135deg, #0A1E38, #0D2A4A);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .social-card-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .social-card-img .placeholder-icon { font-size: 3rem; color: rgba(0,173,239,0.3); }
+        .social-platform-badge {
+            position: absolute; top: 10px; left: 10px;
+            width: 32px; height: 32px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; color: white;
+        }
+        .badge-fb  { background: #1A5CA0; }
+        .badge-ig  { background: linear-gradient(135deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+        .badge-yt  { background: #CC0000; }
+        .social-card-body { padding: 1.1rem 1.25rem 1.25rem; }
+        .social-card-platform { font-size: 0.62rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.4rem; }
+        .social-card-platform.fb { color: #6AAAFF; }
+        .social-card-platform.ig { color: #F5A3D0; }
+        .social-card-platform.yt { color: #FF7070; }
+        .social-card-text { font-size: 0.82rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 0.75rem; }
+        .social-card-footer { display: flex; align-items: center; justify-content: space-between; }
+        .social-card-date { font-size: 0.7rem; color: var(--text-dim); }
+        .social-card-action {
+            display: inline-flex; align-items: center; gap: 5px;
+            font-size: 0.7rem; font-weight: 700; text-decoration: none;
+            letter-spacing: 0.06em; text-transform: uppercase; transition: gap 0.2s;
+        }
+        .social-card-action.fb { color: #6AAAFF; }
+        .social-card-action.ig { color: #F5A3D0; }
+        .social-card-action.yt { color: #FF7070; }
+        .social-card-action:hover { gap: 8px; }
+
+        /* Bottom CTA row */
+        .social-cta-row {
+            display: flex; justify-content: center; gap: 1rem;
+            margin-top: 2.5rem; flex-wrap: wrap; padding: 0 1rem;
+        }
+        .social-cta-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 11px 22px; border-radius: 50px; font-size: 0.8rem;
+            font-weight: 700; text-decoration: none; letter-spacing: 0.06em;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .social-cta-btn.fb { background: #1A5CA0; color: white; box-shadow: 0 4px 16px rgba(26,92,160,0.35); }
+        .social-cta-btn.ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); color: white; box-shadow: 0 4px 16px rgba(180,80,80,0.35); }
+        .social-cta-btn.yt { background: #CC0000; color: white; box-shadow: 0 4px 16px rgba(204,0,0,0.35); }
+        .social-cta-btn:hover { transform: translateY(-2px); }
+
+        /* ── FOOTER ── */
+        footer {
+            background: var(--ink); border-top: 1px solid rgba(0,173,239,0.1);
+            padding: 3.5rem 2rem; text-align: center;
+        }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--blue); }
+        footer p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+        footer .copy { margin-top: 2rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+        .pillar-dots { display: none; }
+        @media (max-width: 900px) {
+            .nav-toggle { display: flex; }
+            .nav-links { display: none; }
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 74px; left: 0; right: 0;
+                background: rgba(8,16,32,0.97);
+                backdrop-filter: blur(18px);
+                padding: 1.5rem 2rem 2rem;
+                gap: 1.25rem;
+                border-top: 1px solid rgba(0,173,239,0.15);
+                z-index: 99;
+            }
+            .nav-links.mobile-open a { font-size: 1rem; padding: 4px 0; }
+            .nav-links.mobile-open .btn-give { margin-top: 0.5rem; }
+            .hero-overlay {
+                background: linear-gradient(to bottom, rgba(8,16,32,0.5) 0%, rgba(8,16,32,0.6) 60%, var(--navy) 100%);
+            }
+            .hero-content { align-items: center; text-align: center; }
+            .hero h1 { max-width: 100%; }
+            .hero-sub { max-width: 100%; }
+            .hero-actions { justify-content: center; }
+            .pillars { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+            .pillars::-webkit-scrollbar { display: none; }
+            .pillar { flex: 0 0 100%; scroll-snap-align: start; border-right: none; border-bottom: none; min-height: 110px; }
+            .pillar-dots { display: flex; justify-content: center; gap: 7px; padding: 10px 0 14px; background: var(--navy); }
+            .pillar-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(255,255,255,0.25); transition: background 0.2s, transform 0.2s; cursor: pointer; }
+            .pillar-dot.active { background: var(--blue); transform: scale(1.3); }
+            .welcome-inner { grid-template-columns: 1fr; gap: 3rem; }
+            .visit-grid { grid-template-columns: 1fr; }
+            .service-card { position: static; }
+            .expect-grid { grid-template-columns: 1fr; }
+            .media-grid { grid-template-columns: 1fr; }
+            .rsvp-form { grid-template-columns: 1fr; }
+            .rsvp-form .full, .btn-rsvp { grid-column: 1; }
+            .img-badge { right: 0; bottom: -16px; }
+        }
+
+        /* ── OUTREACH GALLERY ── */
+        .outreach-gallery {
+            background: var(--navy-mid);
+            padding: 5rem 2rem;
+            overflow: hidden;
+        }
+        .outreach-gallery .section-header { margin-bottom: 2.5rem; }
+        .gallery-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.4fr 1fr 1fr;
+            grid-template-rows: 260px 220px;
+            gap: 12px;
+        }
+        .gi {
+            border-radius: 14px;
+            overflow: hidden;
+            position: relative;
+            background: var(--navy-card);
+        }
+        /* Stack all images inside each cell; JS rotates active class */
+        .gi img {
+            position: absolute;
+            inset: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            display: block;
+            opacity: 0;
+            transition: opacity 0.9s ease, transform 6s ease;
+            transform: scale(1.06);
+        }
+        .gi img.gi-active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        .gi::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(8,16,32,0.5) 0%, transparent 65%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        .gi.span-col { grid-column: span 1; grid-row: span 2; }
+        .gi.wide    { grid-column: span 2; }
+
+        @media (max-width: 900px) {
+            .outreach-gallery { padding: 3rem 0 3rem 1.25rem; }
+            .outreach-gallery .section-header { padding: 0 1.25rem; }
+            .gallery-grid {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                gap: 10px;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                padding-right: 1.25rem;
+                /* hide scrollbar */
+                scrollbar-width: none;
+            }
+            .gallery-grid::-webkit-scrollbar { display: none; }
+            .gi, .gi.span-col, .gi.wide {
+                flex: 0 0 72vw;
+                max-width: 280px;
+                height: 200px;
+                grid-column: unset;
+                grid-row: unset;
+                aspect-ratio: unset;
+                scroll-snap-align: start;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+    <div class="nav-inner">
+        <a class="logo" href="#">
+            <div class="logo-mark"><img src="pics/LOGO transparent3_white.png" alt="ICANJ"></div>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="visit.html">Visit</a></li>
+            <li><a href="media.html">Media</a></li>
+            <li><a href="ministries.html">Ministries</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="https://icanj.churchcenter.com/giving" target="_blank" class="btn-give">Give</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="hero-video-wrap">
+        <iframe
+            class="hero-video"
+            src="https://www.youtube.com/embed/NtulF9yUquo?autoplay=1&mute=1&loop=1&playlist=NtulF9yUquo&controls=0&showinfo=0&rel=0&modestbranding=1&iv_load_policy=3&start=0"
+            frameborder="0"
+            allow="autoplay; encrypted-media"
+            allowfullscreen>
+        </iframe>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-glow"></div>
+    <div class="hero-content">
+        
+        <h1>
+            Connecting<br>Generations,<br>
+            <span class="line-blue">Transforming Lives</span>
+        </h1>
+        <p class="hero-sub"></p>
+        <div class="hero-actions">
+            <a href="#plan-visit" class="btn-primary">
+                Plan Your Visit <i class="fas fa-arrow-right"></i>
+            </a>
+            <a href="#media" class="btn-secondary">
+                <i class="fas fa-play"></i> Watch Messages
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- PILLARS BAND -->
+<div class="pillars">
+    <div class="pillar">
+        <div class="pillar-icon"><i class="fas fa-hands-praying"></i></div>
+        <div class="pillar-text">
+            <div class="pillar-label">Authentic Worship</div>
+            <div class="pillar-desc">Spirit-filled, passionate praise every Sunday</div>
+        </div>
+    </div>
+    <div class="pillar">
+        <div class="pillar-icon"><i class="fas fa-book-open"></i></div>
+        <div class="pillar-text">
+            <div class="pillar-label">Powerful Teaching</div>
+            <div class="pillar-desc">Relevant, life-changing biblical messages</div>
+        </div>
+    </div>
+    <div class="pillar">
+        <div class="pillar-icon"><i class="fas fa-heart"></i></div>
+        <div class="pillar-text">
+            <div class="pillar-label">Loving Community</div>
+            <div class="pillar-desc">Rooted in love, growing together in faith</div>
+        </div>
+    </div>
+</div>
+<div class="pillar-dots">
+    <div class="pillar-dot active" data-index="0"></div>
+    <div class="pillar-dot" data-index="1"></div>
+    <div class="pillar-dot" data-index="2"></div>
+</div>
+
+<!-- WELCOME -->
+<section id="welcome" class="welcome">
+    <div class="welcome-inner">
+        <div>
+            <span class="section-tag">Hackensack, NJ</span>
+            <h2>Welcome to<br><span>ICANJ Church</span></h2>
+            <p>Whether faith is new, familiar, or something you're finding again — <strong>there is a place for you here.</strong> We are a passionate, multi-generational family of believers committed to authentic worship, powerful teaching, and transforming our community through the love of Jesus.</p>
+        </div>
+        <div class="welcome-img-wrap">
+            <img src="pics/DSC03716.JPG" alt="ICANJ Worship">
+            <div class="img-badge">
+                <span class="num">25+</span>
+                <span class="lbl">Years of<br>Ministry</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- PLAN A VISIT -->
+<section id="plan-visit" class="visit">
+    <div class="section-header">
+        <span class="section-tag">First Time?</span>
+        <h2>Plan Your Visit</h2>
+        <p>Everything you need to know before Sunday</p>
+    </div>
+    <div class="visit-grid">
+        <div>
+            <div class="service-card">
+                <div class="live-pill"><span class="dot-pulse" style="background:#34d399"></span>This Sunday</div>
+                <div class="service-time">10:00</div>
+                <div class="service-ampm">AM</div>
+                <div class="service-day">Every Sunday Morning</div>
+                <div class="service-addr">315 State Street<br>Hackensack, New Jersey</div>
+                <hr class="service-divider">
+                <a href="https://maps.google.com/?q=315+State+Street+Hackensack+NJ" target="_blank" class="directions-btn">
+                    Get Directions <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+        <div>
+            <h3 style="font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:3px;margin-bottom:1.5rem;color:rgba(255,255,255,0.4)">WHAT TO EXPECT</h3>
+            <div class="expect-grid">
+                <div class="expect-card">
+                    <div class="expect-icon"><i class="fas fa-car"></i></div>
+                    <h4>Easy Access & Parking</h4>
+                    <p>Convenient location with plenty of free parking right at the church.</p>
+                </div>
+                <div class="expect-card">
+                    <div class="expect-icon"><i class="fas fa-shirt"></i></div>
+                    <h4>Come As You Are</h4>
+                    <p>No dress code. Jeans or Sunday best — everyone is welcome exactly as they are.</p>
+                </div>
+                <div class="expect-card">
+                    <div class="expect-icon"><i class="fas fa-music"></i></div>
+                    <h4>Dynamic Worship</h4>
+                    <p>Passionate, Spirit-filled worship and relevant, life-changing messages.</p>
+                </div>
+                <div class="expect-card">
+                    <div class="expect-icon"><i class="fas fa-child"></i></div>
+                    <h4>Kids Ministry</h4>
+                    <p>Safe, fun, and engaging environments where children grow in faith.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+<!-- OUTREACH GALLERY -->
+<section class="outreach-gallery">
+    <div class="section-header">
+        <span class="section-tag">Serving Our Community</span>
+        <h2>Love in Action</h2>
+        <p>Reaching beyond our walls — locally and globally</p>
+    </div>
+    <div class="gallery-grid">
+        <!-- Each .gi holds multiple imgs; JS cycles through them independently -->
+        <div class="gi span-col">
+            <img src="pics/DSC05285.JPG" alt="Community outreach" class="gi-active">
+            <img src="pics/DSC05304.JPG" alt="Church family serving">
+            <img src="pics/DSC01392.jpg" alt="Kids ministry">
+        </div>
+        <div class="gi">
+            <img src="pics/DSC05304.JPG" alt="Church family serving" class="gi-active">
+            <img src="pics/DSC05314.JPG" alt="Youth ministry">
+            <img src="pics/DSC05285.JPG" alt="Community outreach">
+        </div>
+        <div class="gi">
+            <img src="pics/DSC05314.JPG" alt="Youth ministry" class="gi-active">
+            <img src="pics/DSC01392.jpg" alt="Kids ministry">
+            <img src="pics/DSC05304.JPG" alt="Church family">
+        </div>
+        <div class="gi wide">
+            <img src="pics/DSC01392.jpg" alt="Kids ministry" class="gi-active">
+            <img src="pics/DSC05285.JPG" alt="Community outreach">
+            <img src="pics/DSC05314.JPG" alt="Youth ministry">
+        </div>
+    </div>
+</section>
+
+<script>
+(function() {
+    // Stagger each cell so they don't all flip at the same time
+    document.querySelectorAll('.gallery-grid .gi').forEach(function(cell, cellIdx) {
+        var imgs = cell.querySelectorAll('img');
+        if (imgs.length < 2) return;
+        var current = 0;
+        setTimeout(function() {
+            setInterval(function() {
+                imgs[current].classList.remove('gi-active');
+                current = (current + 1) % imgs.length;
+                imgs[current].classList.add('gi-active');
+            }, 3500);
+        }, cellIdx * 900); // stagger: 0ms, 900ms, 1800ms, 2700ms
+    });
+})();
+</script>
+
+    <div class="rsvp-wrap">
+        <h3>Let Us Know You're Coming</h3>
+        <p class="sub">Fill this out and our team will warmly welcome you at the door.</p>
+        <form class="rsvp-form" id="visit-form">
+            <input type="text" placeholder="First Name *" required>
+            <input type="text" placeholder="Last Name *" required>
+            <input type="email" placeholder="Email Address *" required class="full">
+            <input type="tel" placeholder="Phone Number">
+            <input type="date">
+            <button type="submit" class="btn-rsvp">I'm Coming This Sunday! 🙌</button>
+        </form>
+    </div>
+</section>
+
+<!-- SOCIAL FEED CAROUSEL -->
+<section class="social-feed">
+    <div class="social-feed-header">
+        <span class="section-tag">Follow Along</span>
+        <h3>ICANJ Online</h3>
+        <p>Stay connected across all our platforms</p>
+    </div>
+
+    <div class="social-track-wrap">
+        <div class="social-track" id="socialTrack">
+
+            <!-- FB 1 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC00352.jpg" alt="Worship">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">What a powerful Sunday service! God moved in a mighty way today. Thank you all for worshipping with us 🙏</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 18, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IG 1 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC01291.jpg" alt="Worship night">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">✨ Night of Worship last Friday was absolutely electric. His presence was so real. #ICANJ #WorshipNight</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 16, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- YT 1 -->
+            <div class="social-card">
+                <div class="social-card-img" style="background:#000">
+                    <img src="https://img.youtube.com/vi/NtulF9yUquo/hqdefault.jpg" alt="Sermon thumbnail">
+                    <div class="social-platform-badge badge-yt"><i class="fab fa-youtube"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform yt">YouTube</div>
+                    <div class="social-card-text">🎬 NEW MESSAGE: "Standing Firm in Uncertain Times" — Pr. Finney Thomas | Rooted & Rising Series</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 11, 2025</span>
+                        <a href="https://www.youtube.com/@ICANJ" target="_blank" class="social-card-action yt">Watch <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IG 2 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC01392.jpg" alt="Kids ministry">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">Our Kids Ministry fam is growing! These little ones are the next generation of world-changers 🌟 #ICANJKids</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 12, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FB 2 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05285.JPG" alt="Community outreach">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">Community Outreach Day was a blessing! We served 200+ families in Hackensack this weekend. The church is the hands of Jesus ❤️</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 10, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- YT 2 -->
+            <div class="social-card">
+                <div class="social-card-img" style="background:#000">
+                    <img src="https://img.youtube.com/vi/NtulF9yUquo/hqdefault.jpg" alt="Sermon">
+                    <div class="social-platform-badge badge-yt"><i class="fab fa-youtube"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform yt">YouTube</div>
+                    <div class="social-card-text">🎬 "When God Opens a Door" — Pr. Finney Thomas | Watch the full message now on our YouTube channel!</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 4, 2025</span>
+                        <a href="https://www.youtube.com/@ICANJ" target="_blank" class="social-card-action yt">Watch <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- IG 3 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05304.JPG" alt="Church family">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">Church Family Day 2025 is coming! 🎉 Save the date — June 22. Food, worship, games & so much love. #ICANJFamilyDay</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 8, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FB 3 -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05314.JPG" alt="Youth">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">Youth Summer Conference registration is NOW OPEN! Aug 15–17. Don't let your teens miss this — it'll be life-changing 🔥</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 5, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Duplicate set for seamless loop -->
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC00352.jpg" alt="Worship">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">What a powerful Sunday service! God moved in a mighty way today. Thank you all for worshipping with us 🙏</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 18, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC01291.jpg" alt="Worship night">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">✨ Night of Worship last Friday was absolutely electric. His presence was so real. #ICANJ #WorshipNight</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 16, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img" style="background:#000">
+                    <img src="https://img.youtube.com/vi/NtulF9yUquo/hqdefault.jpg" alt="Sermon thumbnail">
+                    <div class="social-platform-badge badge-yt"><i class="fab fa-youtube"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform yt">YouTube</div>
+                    <div class="social-card-text">🎬 NEW MESSAGE: "Standing Firm in Uncertain Times" — Pr. Finney Thomas | Rooted & Rising Series</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 11, 2025</span>
+                        <a href="https://www.youtube.com/@ICANJ" target="_blank" class="social-card-action yt">Watch <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC01392.jpg" alt="Kids ministry">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">Our Kids Ministry fam is growing! These little ones are the next generation of world-changers 🌟 #ICANJKids</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 12, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05285.JPG" alt="Community outreach">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">Community Outreach Day was a blessing! We served 200+ families in Hackensack this weekend ❤️</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 10, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05304.JPG" alt="Church family">
+                    <div class="social-platform-badge badge-ig"><i class="fab fa-instagram"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform ig">Instagram</div>
+                    <div class="social-card-text">Church Family Day 2025 is coming! 🎉 Save the date — June 22. #ICANJFamilyDay</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 8, 2025</span>
+                        <a href="https://instagram.com/ica.nj" target="_blank" class="social-card-action ig">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="social-card">
+                <div class="social-card-img">
+                    <img src="pics/DSC05314.JPG" alt="Youth">
+                    <div class="social-platform-badge badge-fb"><i class="fab fa-facebook-f"></i></div>
+                </div>
+                <div class="social-card-body">
+                    <div class="social-card-platform fb">Facebook</div>
+                    <div class="social-card-text">Youth Summer Conference registration is NOW OPEN! Aug 15–17. Don't let your teens miss this 🔥</div>
+                    <div class="social-card-footer">
+                        <span class="social-card-date">May 5, 2025</span>
+                        <a href="https://facebook.com/ICANJ" target="_blank" class="social-card-action fb">View <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="social-cta-row">
+        <a href="https://facebook.com/ICANJ" target="_blank" class="social-cta-btn fb"><i class="fab fa-facebook-f"></i> Facebook</a>
+        <a href="https://instagram.com/ica.nj" target="_blank" class="social-cta-btn ig"><i class="fab fa-instagram"></i> Instagram</a>
+        <a href="https://www.youtube.com/@ICANJ" target="_blank" class="social-cta-btn yt"><i class="fab fa-youtube"></i> YouTube</a>
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="ministries.html">Ministries</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="media.html">Media</a></li>
+    </ul>
+    <p>315 State Street · Hackensack, New Jersey</p>
+    <p class="copy">© 2026 India Christian Assembly of New Jersey</p>
+</footer>
+
+<script>
+    document.getElementById('visit-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const btn = this.querySelector('.btn-rsvp');
+        btn.textContent = '✅ We\'ll See You Sunday!';
+        btn.style.background = '#d1fae5';
+        btn.style.color = '#065f46';
+        setTimeout(() => {
+            btn.textContent = 'I\'m Coming This Sunday! 🙌';
+            btn.style.background = '';
+            btn.style.color = '';
+            this.reset();
+        }, 4000);
+    });
+
+// Hamburger menu
+(function() {
+    const toggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelector('.nav-links');
+    if (!toggle || !navLinks) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = navLinks.classList.toggle('mobile-open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', isOpen);
+    });
+
+    // Close on link click
+    navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        navLinks.classList.remove('mobile-open');
+        toggle.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }));
+})();
+
+// Pillar slider — auto-advance + dots
+(function() {
+    const track = document.querySelector('.pillars');
+    const dots = document.querySelectorAll('.pillar-dot');
+    if (!track || !dots.length) return;
+    const total = dots.length;
+    let current = 0, timer;
+
+    function goTo(idx) {
+        current = (idx + total) % total;
+        track.scrollTo({ left: current * track.offsetWidth, behavior: 'smooth' });
+        dots.forEach((d, i) => d.classList.toggle('active', i === current));
+    }
+
+    function startAuto() {
+        clearInterval(timer);
+        timer = setInterval(() => goTo(current + 1), 3000);
+    }
+
+    // Pause on touch/swipe, resume after 5s
+    track.addEventListener('touchstart', () => clearInterval(timer), { passive: true });
+    track.addEventListener('touchend', () => setTimeout(startAuto, 5000), { passive: true });
+
+    // Sync dots on manual scroll
+    track.addEventListener('scroll', () => {
+        const idx = Math.round(track.scrollLeft / track.offsetWidth);
+        dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        current = idx;
+    }, { passive: true });
+
+    dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            goTo(+dot.dataset.index);
+            clearInterval(timer);
+            setTimeout(startAuto, 5000);
+        });
+    });
+
+    startAuto();
+})();
+</script>
+</body>
+</html>

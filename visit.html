@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan a Visit | ICANJ Church</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --blue: #00ADEF; --blue-deep: #0089C4; --blue-dark: #005F8A;
+            --navy: #0A1628; --navy-mid: #0D1E35; --navy-card: #112240;
+            --silver: #E8F4FB; --white: #FFFFFF; --mist: #F0F7FC; --ink: #081020;
+            --text-dim: rgba(255,255,255,0.55); --text-mid: rgba(255,255,255,0.75);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,16,32,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(0,173,239,0.15); }
+        .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; height: 74px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+        .logo-mark { width: 120px; height: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 0.18em; color: var(--blue); text-transform: uppercase; display: block; margin-top: -4px; }
+        .logo-text, .logo-sub { display: none; }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--blue); }
+        .btn-give { background: var(--blue) !important; color: white !important; font-weight: 700 !important; padding: 9px 26px; border-radius: 8px; }
+
+        /* PAGE MASTHEAD */
+        .masthead {
+            padding-top: 74px;
+            background: linear-gradient(135deg, #081020 0%, #0A1628 50%, #0D1E35 100%);
+            position: relative; overflow: hidden;
+        }
+        .masthead::before {
+            content: ''; position: absolute; top: -200px; right: -100px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,173,239,0.1) 0%, transparent 65%);
+        }
+        .masthead::after {
+            content: 'VISIT'; position: absolute; font-family: 'Bebas Neue', sans-serif;
+            font-size: 22vw; color: rgba(0,173,239,0.03);
+            bottom: -2vw; left: -1vw; letter-spacing: -4px; pointer-events: none; line-height: 1;
+        }
+        .masthead-inner { max-width: 1280px; margin: 0 auto; padding: 3rem 2.5rem 2.5rem; position: relative; z-index: 1; }
+        .section-tag { display: inline-block; background: var(--blue); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 5px 16px; border-radius: 4px; margin-bottom: 1.25rem; }
+        .masthead h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 2px; }
+        .masthead h1 span { color: var(--blue); }
+        .masthead-sub { font-family: 'Lora', serif; font-style: italic; font-size: 1.15rem; color: var(--text-mid); margin-top: 1rem; max-width: 560px; line-height: 1.7; }
+
+        /* SERVICE TIMES */
+        .service-times { background: var(--navy); padding: 5rem 2.5rem; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; margin-top: 0.75rem; }
+        .section-header p { color: var(--text-dim); margin-top: 0.6rem; font-size: 1rem; }
+        .times-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+        .times-grid + .times-grid { margin-top: 1.5rem; grid-template-columns: repeat(3, minmax(0,1fr)); max-width: 733px; }
+        .time-card {
+            background: linear-gradient(145deg, #0E2040 0%, #0A1628 100%);
+            border: 1px solid rgba(0,173,239,0.2);
+            border-radius: 20px; padding: 2.5rem 1.75rem; text-align: center;
+            position: relative; overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .time-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--blue-dark), var(--blue)); border-radius: 20px 20px 0 0; }
+        .time-card.featured { border-color: rgba(0,173,239,0.45); background: linear-gradient(145deg, #0D2A4A 0%, #0A1E38 100%); }
+        .time-card:hover { transform: translateY(-4px); border-color: rgba(0,173,239,0.4); }
+        .time-pill { display: inline-block; background: rgba(0,173,239,0.12); border: 1px solid rgba(0,173,239,0.3); border-radius: 50px; padding: 4px 14px; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--blue); margin-bottom: 1.25rem; }
+        .time-card .time { font-family: 'Bebas Neue', sans-serif; font-size: 3.5rem; color: var(--blue); letter-spacing: 2px; line-height: 1; }
+        .time-card .time.text-time { font-size: 2rem; letter-spacing: 1px; }
+        .time-card .day { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-top: 0.4rem; }
+        .time-card .label { font-size: 1rem; font-weight: 700; color: white; margin-top: 0.75rem; }
+        .time-card .desc { font-size: 0.82rem; color: var(--text-dim); margin-top: 0.4rem; line-height: 1.5; }
+
+        /* WHAT TO EXPECT */
+        .expect { background: var(--mist); color: var(--navy); padding: 6rem 2.5rem; }
+        .expect .section-header h2 { color: var(--navy); }
+        .expect .section-header p { color: #5A7A96; }
+        .expect-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .expect-img { border-radius: 20px; overflow: hidden; box-shadow: 0 24px 64px rgba(0,80,120,0.18); }
+        .expect-img img { width: 100%; display: block; }
+        .expect-list { display: flex; flex-direction: column; gap: 1.5rem; }
+        .expect-item { display: flex; gap: 1.25rem; align-items: flex-start; }
+        .expect-icon { width: 50px; height: 50px; flex-shrink: 0; border-radius: 14px; background: rgba(0,173,239,0.12); border: 1px solid rgba(0,173,239,0.3); display: flex; align-items: center; justify-content: center; color: var(--blue); font-size: 1.2rem; }
+        .expect-item h4 { font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 0.3rem; }
+        .expect-item p { font-size: 0.88rem; color: #5A7A96; line-height: 1.65; }
+
+        /* KIDS MINISTRY CALLOUT */
+        .kids-callout {
+            background: linear-gradient(135deg, #004A7A 0%, #0089C4 60%, #00ADEF 100%);
+            padding: 5rem 2.5rem; text-align: center; position: relative; overflow: hidden;
+        }
+        .kids-callout::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 65%); }
+        .kids-callout h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; margin-bottom: 0.75rem; position: relative; z-index: 1; }
+        .kids-callout p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto 2rem; line-height: 1.7; position: relative; z-index: 1; }
+        .kids-icons { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; position: relative; z-index: 1; }
+        .kids-icon-item { display: flex; flex-direction: column; align-items: center; gap: 0.5rem; }
+        .kids-icon-circle { width: 70px; height: 70px; background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; color: white; }
+        .kids-icon-item span { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.8; }
+
+        /* RSVP */
+        .rsvp-section { background: var(--navy); padding: 6rem 2.5rem; }
+        .rsvp-wrap {
+            max-width: 720px; margin: 0 auto;
+            background: linear-gradient(135deg, #004A7A 0%, #0069A8 40%, #0089C4 70%, #005F8A 100%);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 24px; padding: 3.5rem;
+            position: relative; overflow: hidden; box-shadow: 0 24px 64px rgba(0,80,160,0.35);
+        }
+        .rsvp-wrap::before { content: ''; position: absolute; top: -80px; right: -80px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(255,255,255,0.12) 0%, transparent 65%); pointer-events: none; }
+        .rsvp-wrap h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 2px; text-align: center; margin-bottom: 0.4rem; color: white; position: relative; z-index: 1; }
+        .rsvp-wrap .sub { text-align: center; color: rgba(255,255,255,0.75); margin-bottom: 2.5rem; font-size: 0.9rem; position: relative; z-index: 1; }
+        .rsvp-form { display: grid; grid-template-columns: 1fr 1fr; gap: 0.875rem; position: relative; z-index: 1; }
+        .rsvp-form input, .rsvp-form select { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 10px; padding: 16px 20px; color: white; font-size: 0.95rem; font-family: 'DM Sans', sans-serif; outline: none; transition: border-color 0.2s, background 0.2s; }
+        .rsvp-form input::placeholder { color: rgba(255,255,255,0.5); }
+        .rsvp-form select option { background: var(--navy); color: white; }
+        .rsvp-form input:focus, .rsvp-form select:focus { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.6); }
+        .rsvp-form .full { grid-column: 1/-1; }
+        .btn-rsvp { grid-column: 1/-1; background: white; color: var(--blue-dark); font-weight: 800; font-size: 1rem; padding: 18px; border: none; border-radius: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: 0.1em; font-family: 'DM Sans', sans-serif; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s; margin-top: 0.4rem; }
+        .btn-rsvp:hover { transform: translateY(-2px); background: var(--silver); box-shadow: 0 14px 36px rgba(0,0,0,0.3); }
+
+        /* MAP SECTION */
+        .location-section { background: var(--mist); color: var(--navy); padding: 6rem 2.5rem; }
+        .location-section .section-header h2 { color: var(--navy); }
+        .location-section .section-header p { color: #5A7A96; }
+        .location-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+        .location-details h3 { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; letter-spacing: 2px; color: var(--navy); margin-bottom: 1.5rem; }
+        .location-info-row { display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1.25rem; }
+        .loc-icon { width: 44px; height: 44px; background: var(--blue); border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1rem; flex-shrink: 0; }
+        .loc-label { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue-deep); margin-bottom: 0.2rem; }
+        .loc-value { font-size: 0.95rem; color: #3A5068; line-height: 1.5; }
+        .map-embed { border-radius: 16px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,80,120,0.15); background: #d8e4ec; height: 360px; display: flex; align-items: center; justify-content: center; }
+        .map-embed iframe { width: 100%; height: 100%; border: none; display: block; }
+        .directions-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--blue); color: white; font-weight: 700; font-size: 0.85rem; padding: 14px 28px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; margin-top: 1.75rem; transition: transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 16px rgba(0,173,239,0.3); }
+        .directions-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,173,239,0.45); }
+
+        footer { background: var(--ink); border-top: 1px solid rgba(0,173,239,0.1); padding: 3.5rem 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--blue); }
+        footer p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+        footer .copy { margin-top: 2rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+
+        /* ── HAMBURGER ── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 900px) {
+            .nav-toggle { display: flex; }
+            .nav-links { display: none; }
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 74px; left: 0; right: 0;
+                background: rgba(8,16,32,0.97);
+                backdrop-filter: blur(18px);
+                padding: 1.5rem 2rem 2rem;
+                gap: 1.25rem;
+                border-top: 1px solid rgba(0,173,239,0.15);
+                z-index: 99;
+            }
+            .nav-links.mobile-open a { font-size: 1rem; padding: 4px 0; }
+            .nav-links.mobile-open .btn-give { margin-top: 0.5rem; }
+            .times-grid { grid-template-columns: 1fr; }
+            .expect-inner { grid-template-columns: 1fr; }
+            .location-inner { grid-template-columns: 1fr; }
+            .rsvp-form { grid-template-columns: 1fr; }
+            .rsvp-form .full, .btn-rsvp { grid-column: 1; }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="logo" href="index.html">
+            <div class="logo-mark"><img src="pics/LOGO transparent3_white.png" alt="ICANJ"></div>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="visit.html" class="active">Visit</a></li>
+            <li><a href="media.html">Media</a></li>
+            <li><a href="ministries.html">Ministries</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="https://icanj.churchcenter.com/giving" target="_blank" class="btn-give">Give</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- HERO -->
+<!-- MASTHEAD -->
+<div class="masthead">
+    <div class="masthead-inner">
+        <span class="section-tag">We're Expecting You</span>
+        <h1>Plan Your<br><span>Visit</span></h1>
+        </div>
+</div>
+
+<!-- SERVICE TIMES -->
+<section class="service-times">
+    <div class="section-header">
+        <span class="section-tag">Weekly Gatherings</span>
+        <h2>Service Schedule</h2>
+        <p>Come as you are — a seat is always waiting for you.</p>
+    </div>
+    <div class="times-grid">
+        <div class="time-card">
+            <div class="time-pill">Sunday</div>
+            <div class="time">9:15 AM</div>
+            <div class="day">Every Sunday</div>
+            <div class="label">Sunday School</div>
+            <div class="desc">Biblical teaching for all age groups, from children through adults.</div>
+        </div>
+        <div class="time-card featured">
+            <div class="time-pill">Main Service</div>
+            <div class="time">10:00 AM</div>
+            <div class="day">Every Sunday</div>
+            <div class="label">Sunday Worship Service</div>
+            <div class="desc">Our main gathering — worship, powerful teaching, and community for all ages. English service.</div>
+        </div>
+        <div class="time-card">
+            <div class="time-pill">Sunday</div>
+            <div class="time">10:30 AM</div>
+            <div class="day">Every Sunday</div>
+            <div class="label">Children's Church</div>
+            <div class="desc">A fun, faith-building environment running alongside the main service for kids.</div>
+        </div>
+    </div>
+    <div class="times-grid times-grid-centered">
+        <div class="time-card">
+            <div class="time-pill">Midweek</div>
+            <div class="time text-time">Every Other<br>Wednesday</div>
+            <div class="day">&nbsp;</div>
+            <div class="label">Midweek Service</div>
+            <div class="desc">A focused time of teaching, prayer, and corporate intercession for the church and community.</div>
+        </div>
+        <div class="time-card">
+            <div class="time-pill">Prayer</div>
+            <div class="time text-time">Every<br>Friday Night</div>
+            <div class="day">&nbsp;</div>
+            <div class="label">Malayalam Tarry Meeting</div>
+            <div class="desc">Spirit-filled prayer and worship gathering for the Malayalam-speaking congregation.</div>
+        </div>
+        <div class="time-card">
+            <div class="time-pill">Community</div>
+            <div class="time text-time">Twice<br>a Month</div>
+            <div class="day">&nbsp;</div>
+            <div class="label">Life Groups &amp; Small Groups</div>
+            <div class="desc">Smaller gatherings in homes and various locations — connect, grow, and be known by name.</div>
+        </div>
+    </div>
+</section>
+
+<!-- LOCATION -->
+<section class="location-section">
+    <div class="section-header">
+        <span class="section-tag">Find Us</span>
+        <h2 style="color:var(--navy)">Where We Meet</h2>
+        <p>Conveniently located in the heart of Hackensack, New Jersey.</p>
+    </div>
+    <div class="location-inner">
+        <div class="location-details">
+            <h3>ICANJ Church</h3>
+            <div class="location-info-row">
+                <div class="loc-icon"><i class="fas fa-location-dot"></i></div>
+                <div>
+                    <div class="loc-label">Address</div>
+                    <div class="loc-value">315 State Street<br>Hackensack, NJ 07601</div>
+                </div>
+            </div>
+            <div class="location-info-row">
+                <div class="loc-icon"><i class="fas fa-clock"></i></div>
+                <div>
+                    <div class="loc-label">Sunday Service</div>
+                    <div class="loc-value">10:00 AM — every Sunday</div>
+                </div>
+            </div>
+            <div class="location-info-row">
+                <div class="loc-icon"><i class="fas fa-envelope"></i></div>
+                <div>
+                    <div class="loc-label">Contact</div>
+                    <div class="loc-value">welcome@icanj.org</div>
+                </div>
+            </div>
+            <div class="location-info-row">
+                <div class="loc-icon"><i class="fas fa-phone"></i></div>
+                <div>
+                    <div class="loc-label">Phone</div>
+                    <div class="loc-value">(201) 331-3444</div>
+                </div>
+            </div>
+            <div class="location-info-row">
+                <div class="loc-icon"><i class="fas fa-square-parking"></i></div>
+                <div>
+                    <div class="loc-label">Parking</div>
+                    <div class="loc-value">Free parking on-site and on street</div>
+                </div>
+            </div>
+            <a href="https://maps.google.com/?q=315+State+Street+Hackensack+NJ" target="_blank" class="directions-btn">
+                Get Directions <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+        <div class="map-embed">
+            <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3016.4!2d-74.0436!3d40.8868!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c2f9!2s315+State+St+Hackensack+NJ!5e0!3m2!1sen!2sus!4v1"
+                loading="lazy" allowfullscreen>
+            </iframe>
+        </div>
+    </div>
+</section>
+
+<!-- WHAT TO EXPECT -->
+<section class="expect">
+    <div class="expect-inner">
+        <div class="expect-img">
+            <img src="pics/DSC00352.jpg" alt="Church interior">
+        </div>
+        <div>
+            <span class="section-tag">First Timer?</span>
+            <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,5vw,4rem);line-height:0.95;letter-spacing:1px;margin-bottom:1.5rem;color:var(--navy)">What To <span style="color:var(--blue-deep)">Expect</span></h2>
+            <div class="expect-list">
+                <div class="expect-item">
+                    <div class="expect-icon"><i class="fas fa-door-open"></i></div>
+                    <div>
+                        <h4>Warm Welcome</h4>
+                        <p>Our greeters team is ready to meet you with a smile, answer your questions, and help you find your seat comfortably.</p>
+                    </div>
+                </div>
+                <div class="expect-item">
+                    <div class="expect-icon"><i class="fas fa-shirt"></i></div>
+                    <div>
+                        <h4>Come As You Are</h4>
+                        <p>No dress code here. Some come in jeans, others in Sunday best — what matters is your heart, not your outfit.</p>
+                    </div>
+                </div>
+                <div class="expect-item">
+                    <div class="expect-icon"><i class="fas fa-music"></i></div>
+                    <div>
+                        <h4>Dynamic Worship</h4>
+                        <p>Expect passionate, Spirit-filled worship that creates an atmosphere of genuine encounter with God.</p>
+                    </div>
+                </div>
+                <div class="expect-item">
+                    <div class="expect-icon"><i class="fas fa-clock"></i></div>
+                    <div>
+                        <h4>About 90 Minutes</h4>
+                        <p>Our services run approximately 90 minutes — enough time to worship, hear the Word, and connect with others.</p>
+                    </div>
+                </div>
+                <div class="expect-item">
+                    <div class="expect-icon"><i class="fas fa-car"></i></div>
+                    <div>
+                        <h4>Easy Parking</h4>
+                        <p>Free parking is available right at the church building. We're easy to find at 315 State Street, Hackensack.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- KIDS -->
+<section class="kids-callout">
+    <span class="section-tag" style="position:relative;z-index:1">For Families</span>
+    <h2>Kids Are Welcome Here</h2>
+    <p>We believe children deserve more than childcare during church. Our Kids Ministry runs every Sunday morning — a safe, fun, and faith-building environment designed just for them.</p>
+    <div class="kids-icons">
+        <div class="kids-icon-item"><div class="kids-icon-circle"><i class="fas fa-shield-halved"></i></div><span>Safe & Secure</span></div>
+        <div class="kids-icon-item"><div class="kids-icon-circle"><i class="fas fa-star"></i></div><span>Age-Specific</span></div>
+        <div class="kids-icon-item"><div class="kids-icon-circle"><i class="fas fa-hands-holding-child"></i></div><span>Trained Staff</span></div>
+        <div class="kids-icon-item"><div class="kids-icon-circle"><i class="fas fa-gamepad"></i></div><span>Fun & Faith</span></div>
+    </div>
+</section>
+
+<!-- RSVP -->
+<section class="rsvp-section">
+    <div class="rsvp-wrap">
+        <h3>Let Us Know You're Coming</h3>
+        <p class="sub">Fill this out and our team will warmly welcome you at the door.</p>
+        <form class="rsvp-form" id="visit-form" onsubmit="handleRSVP(event)">
+            <input type="text" placeholder="First Name *" required>
+            <input type="text" placeholder="Last Name *" required>
+            <input type="email" placeholder="Email Address *" required class="full">
+            <input type="tel" placeholder="Phone Number">
+            <input type="date">
+            <select class="full">
+                <option value="" disabled selected>How did you hear about us?</option>
+                <option>Friend or Family</option>
+                <option>Google Search</option>
+                <option>Social Media</option>
+                <option>Drove By</option>
+                <option>Other</option>
+            </select>
+            <button type="submit" class="btn-rsvp">I'm Coming This Sunday! 🙌</button>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="ministries.html">Ministries</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="media.html">Media</a></li>
+    </ul>
+    <p>315 State Street · Hackensack, New Jersey</p>
+    <p class="copy">© 2026 India Christian Assembly of New Jersey</p>
+</footer>
+
+<script>
+// Hamburger menu
+(function() {
+    var toggle = document.querySelector(".nav-toggle");
+    var navLinks = document.querySelector(".nav-links");
+    if (!toggle || !navLinks) return;
+    toggle.addEventListener("click", function() {
+        var isOpen = navLinks.classList.toggle("mobile-open");
+        toggle.classList.toggle("open", isOpen);
+        toggle.setAttribute("aria-expanded", isOpen);
+    });
+    navLinks.querySelectorAll("a").forEach(function(a) {
+        a.addEventListener("click", function() {
+            navLinks.classList.remove("mobile-open");
+            toggle.classList.remove("open");
+            toggle.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+
+function handleRSVP(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.btn-rsvp');
+    btn.textContent = '✅ We\'ll See You Sunday!';
+    btn.style.background = '#d1fae5';
+    btn.style.color = '#065f46';
+    setTimeout(() => {
+        btn.textContent = 'I\'m Coming This Sunday! 🙌';
+        btn.style.background = '';
+        btn.style.color = '';
+        e.target.reset();
+    }, 4000);
+}
+</script>
+</body>
+</html>

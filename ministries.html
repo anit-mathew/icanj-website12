@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ministries | ICANJ Church</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Lora:ital,wght@0,600;1,500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --blue: #00ADEF; --blue-deep: #0089C4; --blue-dark: #005F8A;
+            --navy: #0A1628; --navy-mid: #0D1E35;
+            --silver: #E8F4FB; --white: #FFFFFF; --mist: #F0F7FC; --ink: #081020;
+            --text-dim: rgba(255,255,255,0.55); --text-mid: rgba(255,255,255,0.75);
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--navy); color: var(--white); overflow-x: hidden; }
+
+        nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(8,16,32,0.88); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(0,173,239,0.15); }
+        .nav-inner { max-width: 1280px; margin: 0 auto; padding: 0 2.5rem; height: 74px; display: flex; align-items: center; justify-content: space-between; }
+        .logo { display: flex; align-items: center; gap: 12px; text-decoration: none; color: white; }
+        .logo-mark { width: 120px; height: 44px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .logo-mark img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-text { font-family: 'Bebas Neue', sans-serif; font-size: 26px; letter-spacing: 3px; }
+        .logo-sub { font-size: 0.6rem; letter-spacing: 0.18em; color: var(--blue); text-transform: uppercase; display: block; margin-top: -4px; }
+        .logo-text, .logo-sub { display: none; }
+        .nav-links { display: flex; align-items: center; gap: 2.5rem; list-style: none; }
+        .nav-links a { text-decoration: none; color: var(--text-mid); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
+        .nav-links a:hover, .nav-links a.active { color: var(--blue); }
+        .btn-give { background: var(--blue) !important; color: white !important; font-weight: 700 !important; padding: 9px 26px; border-radius: 8px; }
+        .section-tag { display: inline-block; background: var(--blue); color: white; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; padding: 5px 16px; border-radius: 4px; margin-bottom: 1.25rem; }
+
+        /* PAGE HERO */
+        /* PAGE MASTHEAD */
+        .masthead {
+            padding-top: 74px;
+            background: linear-gradient(135deg, #081020 0%, #0A1628 50%, #0D1E35 100%);
+            position: relative; overflow: hidden;
+        }
+        .masthead::before {
+            content: ''; position: absolute; top: -200px; right: -100px;
+            width: 700px; height: 700px;
+            background: radial-gradient(circle, rgba(0,173,239,0.1) 0%, transparent 65%);
+        }
+        .masthead::after {
+            content: 'MINISTRIES'; position: absolute; font-family: 'Bebas Neue', sans-serif;
+            font-size: 22vw; color: rgba(0,173,239,0.03);
+            bottom: -2vw; left: -1vw; letter-spacing: -4px; pointer-events: none; line-height: 1;
+        }
+        .masthead-inner { max-width: 1280px; margin: 0 auto; padding: 3rem 2.5rem 2.5rem; position: relative; z-index: 1; }
+        .masthead h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 0.95; letter-spacing: 2px; }
+        .masthead h1 span { color: var(--blue); }
+        .masthead-sub { font-family: 'Lora', serif; font-style: italic; font-size: 1.15rem; color: var(--text-mid); margin-top: 1rem; max-width: 560px; line-height: 1.7; }
+
+        /* INTRO */
+        .intro { background: var(--mist); color: var(--navy); padding: 5rem 2.5rem; text-align: center; }
+        .intro h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; margin-bottom: 1rem; color: var(--navy); }
+        .intro h2 span { color: var(--blue-deep); }
+        .intro p { font-size: 1.05rem; line-height: 1.8; color: #3A5068; max-width: 700px; margin: 0 auto; }
+
+        /* MINISTRIES GRID */
+        .ministries-section { background: var(--navy); padding: 6rem 2.5rem; }
+        .ministries-grid { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+        .ministry-card {
+            background: linear-gradient(145deg, #0E2040 0%, #0A1628 100%);
+            border: 1px solid rgba(0,173,239,0.15); border-radius: 24px; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.2);
+        }
+        .ministry-card:hover { transform: translateY(-6px); box-shadow: 0 24px 56px rgba(0,0,0,0.35); border-color: rgba(0,173,239,0.35); }
+        .ministry-img { height: 220px; overflow: hidden; position: relative; }
+        .ministry-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.4s; }
+        .ministry-card:hover .ministry-img img { transform: scale(1.05); }
+        .ministry-img-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgba(8,16,32,0.7) 100%); }
+        .ministry-img-icon { position: absolute; bottom: 1rem; left: 1.5rem; width: 50px; height: 50px; background: var(--blue); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; color: white; box-shadow: 0 6px 20px rgba(0,173,239,0.4); }
+        .ministry-body { padding: 1.75rem 2rem 2rem; }
+        .ministry-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--blue); margin-bottom: 0.5rem; }
+        .ministry-body h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; letter-spacing: 2px; margin-bottom: 0.75rem; color: white; }
+        .ministry-body p { font-size: 0.88rem; color: var(--text-dim); line-height: 1.7; margin-bottom: 1.25rem; }
+        .ministry-details { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+        .detail-chip { display: inline-flex; align-items: center; gap: 6px; background: rgba(0,173,239,0.1); border: 1px solid rgba(0,173,239,0.2); border-radius: 6px; padding: 5px 12px; font-size: 0.72rem; color: rgba(255,255,255,0.65); }
+        .detail-chip i { color: var(--blue); font-size: 0.7rem; }
+        .ministry-link { display: inline-flex; align-items: center; gap: 8px; color: var(--blue); font-weight: 600; font-size: 0.82rem; text-decoration: none; margin-top: 1.25rem; transition: gap 0.2s; }
+        .ministry-link:hover { gap: 12px; }
+
+        /* SERVE CALLOUT */
+        .serve-callout {
+            background: linear-gradient(135deg, #004A7A 0%, #0069A8 40%, #0089C4 70%, #00ADEF 100%);
+            padding: 5.5rem 2.5rem; text-align: center; position: relative; overflow: hidden;
+        }
+        .serve-callout::before { content: ''; position: absolute; top: -100px; right: -100px; width: 500px; height: 500px; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 65%); }
+        .serve-callout h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4.5rem); letter-spacing: 2px; margin-bottom: 0.75rem; position: relative; z-index: 1; }
+        .serve-callout p { font-size: 1.05rem; color: rgba(255,255,255,0.85); max-width: 600px; margin: 0 auto 2.5rem; line-height: 1.7; position: relative; z-index: 1; }
+        .serve-actions { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; position: relative; z-index: 1; }
+        .btn-white { display: inline-flex; align-items: center; gap: 10px; background: white; color: var(--blue-dark); font-weight: 800; font-size: 0.9rem; padding: 16px 36px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; box-shadow: 0 8px 24px rgba(0,0,0,0.2); transition: transform 0.2s, box-shadow 0.2s; }
+        .btn-white:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,0.3); }
+        .btn-outline-white { display: inline-flex; align-items: center; gap: 10px; border: 2px solid rgba(255,255,255,0.6); color: white; font-weight: 700; font-size: 0.9rem; padding: 16px 36px; border-radius: 8px; text-decoration: none; text-transform: uppercase; letter-spacing: 0.08em; transition: all 0.2s; }
+        .btn-outline-white:hover { background: rgba(255,255,255,0.12); border-color: white; }
+
+        /* SMALL GROUPS */
+        .small-groups { background: var(--mist); color: var(--navy); padding: 6rem 2.5rem; }
+        .small-groups .section-header h2 { color: var(--navy); }
+        .small-groups .section-header p { color: #5A7A96; }
+        .section-header { text-align: center; margin-bottom: 4rem; }
+        .section-header h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: 2px; margin-top: 0.75rem; }
+        .section-header p { margin-top: 0.6rem; font-size: 1rem; }
+        .groups-grid { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+        .group-card { background: white; border-radius: 16px; padding: 2rem 1.5rem; text-align: center; box-shadow: 0 4px 20px rgba(0,80,120,0.08); transition: transform 0.3s, box-shadow 0.3s; }
+        .group-card:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,80,120,0.15); }
+        .group-icon { width: 60px; height: 60px; border-radius: 50%; background: rgba(0,173,239,0.1); border: 2px solid rgba(0,173,239,0.2); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--blue-deep); margin: 0 auto 1rem; }
+        .group-card h4 { font-size: 0.95rem; font-weight: 700; color: var(--navy); margin-bottom: 0.4rem; }
+        .group-card p { font-size: 0.8rem; color: #5A7A96; line-height: 1.6; }
+
+        footer { background: var(--ink); border-top: 1px solid rgba(0,173,239,0.1); padding: 3.5rem 2rem; text-align: center; }
+        .footer-links { display: flex; justify-content: center; gap: 2rem; margin: 1rem 0; list-style: none; }
+        .footer-links a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.06em; text-transform: uppercase; transition: color 0.2s; }
+        .footer-links a:hover { color: var(--blue); }
+        footer p { color: rgba(255,255,255,0.35); font-size: 0.8rem; }
+        footer .copy { margin-top: 2rem; font-size: 0.7rem; color: rgba(255,255,255,0.2); }
+
+
+        /* ── HAMBURGER ── */
+        .nav-toggle {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+            background: none;
+            border: none;
+            z-index: 101;
+        }
+        .nav-toggle span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background: white;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+        .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.open span:nth-child(2) { opacity: 0; }
+        .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 900px) {
+            .nav-toggle { display: flex; }
+            .nav-links { display: none; }
+            .nav-links.mobile-open {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                position: absolute;
+                top: 74px; left: 0; right: 0;
+                background: rgba(8,16,32,0.97);
+                backdrop-filter: blur(18px);
+                padding: 1.5rem 2rem 2rem;
+                gap: 1.25rem;
+                border-top: 1px solid rgba(0,173,239,0.15);
+                z-index: 99;
+            }
+            .nav-links.mobile-open a { font-size: 1rem; padding: 4px 0; }
+            .nav-links.mobile-open .btn-give { margin-top: 0.5rem; }
+            .ministries-grid { grid-template-columns: 1fr; }
+            .groups-grid { grid-template-columns: 1fr 1fr; }
+        }
+        @media (max-width: 500px) {
+            .groups-grid { grid-template-columns: 1fr; }
+        }
+
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="nav-inner">
+        <a class="logo" href="index.html">
+            <div class="logo-mark"><img src="pics/LOGO transparent3_white.png" alt="ICANJ"></div>
+        </a>
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links">
+            <li><a href="about.html">About</a></li>
+            <li><a href="visit.html">Visit</a></li>
+            <li><a href="media.html">Media</a></li>
+            <li><a href="ministries.html" class="active">Ministries</a></li>
+            <li><a href="events.html">Events</a></li>
+            <li><a href="https://icanj.churchcenter.com/giving" target="_blank" class="btn-give">Give</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+    <div class="masthead-inner">
+        <span class="section-tag">Get Involved</span>
+        <h1>Our<br><span>Ministries</span></h1>
+    </div>
+</div>
+
+<section class="intro">
+    <span class="section-tag">Built for Every Season</span>
+    <h2>Find Your <span>Place</span> at ICANJ</h2>
+    <p>Whether you're in the first chapter of your faith journey or have been walking with God for decades — there is a ministry at ICANJ where you can connect, grow, and make a difference.</p>
+</section>
+
+<section class="ministries-section">
+    <div class="ministries-grid">
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC01392.jpg" alt="Children's Ministry">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-child"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Next Generation</div>
+                <h3>Kids Ministry</h3>
+                <p>A vibrant, age-appropriate environment where children from nursery through 5th grade encounter God through creative worship, Bible stories, and safe community every Sunday morning.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Every Sunday</span>
+                    <span class="detail-chip"><i class="fas fa-clock"></i> During 10 AM Service</span>
+                    <span class="detail-chip"><i class="fas fa-child"></i> Ages Nursery–5th Grade</span>
+                </div>
+                <a href="visit.html#kids" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC03755.JPG" alt="Youth Ministry">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-fire"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Next Generation</div>
+                <h3>Youth Ministry</h3>
+                <p>A dynamic community for middle and high schoolers to encounter God, build deep friendships, and discover their God-given identity and calling in a safe, fun, Spirit-filled space.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Fridays 7:30 PM</span>
+                    <span class="detail-chip"><i class="fas fa-users"></i> Grades 6–12</span>
+                </div>
+                <a href="#" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC03781.JPG" alt="Young Adults">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-compass"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Community</div>
+                <h3>Young Adults</h3>
+                <p>For those in their 20s and 30s navigating career, relationships, and purpose — this ministry creates space for honest conversations, authentic faith, and meaningful community.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Bi-weekly</span>
+                    <span class="detail-chip"><i class="fas fa-users"></i> Ages 18–35</span>
+                </div>
+                <a href="#" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC04224.JPG" alt="Women's Ministry">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-heart"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Women</div>
+                <h3>Women's Ministry</h3>
+                <p>A Christ-centered community where women of all ages find encouragement, deep friendship, and spiritual growth through Bible studies, prayer circles, and sisterhood events throughout the year.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Monthly</span>
+                    <span class="detail-chip"><i class="fas fa-book-open"></i> Bible Study</span>
+                </div>
+                <a href="#" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC05285.JPG" alt="Men's Ministry">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-shield"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Men</div>
+                <h3>Men's Ministry</h3>
+                <p>Building men of God — husbands, fathers, and leaders — through fellowship, accountability, and teaching that equips men to lead with integrity in every area of life.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Monthly</span>
+                    <span class="detail-chip"><i class="fas fa-users"></i> All Men Welcome</span>
+                </div>
+                <a href="#" class="ministry-link">Learn More <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+        <div class="ministry-card">
+            <div class="ministry-img">
+                <img src="pics/DSC05304.JPG" alt="Worship Ministry">
+                <div class="ministry-img-overlay"></div>
+                <div class="ministry-img-icon"><i class="fas fa-music"></i></div>
+            </div>
+            <div class="ministry-body">
+                <div class="ministry-category">Worship Arts</div>
+                <h3>Worship Ministry</h3>
+                <p>Our worship team leads the congregation into the presence of God every week. Musicians, vocalists, and technical team members are always welcome to use their gifts in service.</p>
+                <div class="ministry-details">
+                    <span class="detail-chip"><i class="fas fa-calendar"></i> Every Sunday</span>
+                    <span class="detail-chip"><i class="fas fa-guitar"></i> All Musicians Welcome</span>
+                </div>
+                <a href="mailto:welcome@icanj.org" class="ministry-link">Get Involved <i class="fas fa-arrow-right"></i></a>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- SMALL GROUPS -->
+<section class="small-groups">
+    <div class="section-header">
+        <span class="section-tag">Life Together</span>
+        <h2>Small Groups</h2>
+        <p>Real community happens in smaller circles. Find a group and do life with others.</p>
+    </div>
+    <div class="groups-grid">
+        <div class="group-card">
+            <div class="group-icon"><i class="fas fa-book-open"></i></div>
+            <h4>Bible Study Groups</h4>
+            <p>Dig deeper into Scripture with small, discussion-based groups meeting in homes across NJ.</p>
+        </div>
+        <div class="group-card">
+            <div class="group-icon"><i class="fas fa-pray"></i></div>
+            <h4>Prayer Circles</h4>
+            <p>Intimate groups gathering weekly to intercede for each other, the church, and the world.</p>
+        </div>
+        <div class="group-card">
+            <div class="group-icon"><i class="fas fa-utensils"></i></div>
+            <h4>Dinner Fellowship</h4>
+            <p>Monthly gatherings for families and couples to share a meal and build lasting friendships.</p>
+        </div>
+        <div class="group-card">
+            <div class="group-icon"><i class="fas fa-globe"></i></div>
+            <h4>Missions Team</h4>
+            <p>Connecting the church to local outreach and global missions — serving beyond our walls.</p>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <ul class="footer-links">
+        <li><a href="about.html">About</a></li>
+        <li><a href="visit.html">Visit</a></li>
+        <li><a href="ministries.html">Ministries</a></li>
+        <li><a href="events.html">Events</a></li>
+        <li><a href="media.html">Media</a></li>
+    </ul>
+    <p>315 State Street · Hackensack, New Jersey</p>
+    <p class="copy">© 2026 India Christian Assembly of New Jersey</p>
+</footer>
+<script>
+// Hamburger menu
+(function() {
+    var toggle = document.querySelector(".nav-toggle");
+    var navLinks = document.querySelector(".nav-links");
+    if (!toggle || !navLinks) return;
+    toggle.addEventListener("click", function() {
+        var isOpen = navLinks.classList.toggle("mobile-open");
+        toggle.classList.toggle("open", isOpen);
+        toggle.setAttribute("aria-expanded", isOpen);
+    });
+    navLinks.querySelectorAll("a").forEach(function(a) {
+        a.addEventListener("click", function() {
+            navLinks.classList.remove("mobile-open");
+            toggle.classList.remove("open");
+            toggle.setAttribute("aria-expanded", "false");
+        });
+    });
+})();
+</script>
+</body>
+</html>
